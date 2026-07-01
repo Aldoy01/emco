@@ -112,6 +112,19 @@ Nama `MySQL` menyesuaikan nama database service di Railway. Jika service databas
 
 Jika log menampilkan query ke database `forge`, berarti variable DB belum masuk ke service Laravel. Pastikan `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `DB_HOST`, dan `DB_PORT` sudah ada di **Variables** service aplikasi, bukan hanya di service database.
 
+EMCO juga sudah dibuat kompatibel dengan variable bawaan Railway MySQL:
+
+```env
+MYSQL_URL
+MYSQLHOST
+MYSQLPORT
+MYSQLDATABASE
+MYSQLUSER
+MYSQLPASSWORD
+```
+
+Jadi jika variable `MYSQL*` dari service database sudah tersedia di service Laravel, aplikasi akan membacanya otomatis. Namun cara paling jelas tetap menambahkan `DB_*` seperti contoh di atas.
+
 ## 4. Build Dan Start
 
 Railway dapat mendeteksi Laravel otomatis. Untuk EMCO, biasanya cukup deploy dari GitHub.
