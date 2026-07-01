@@ -62,6 +62,8 @@ Untuk EMCO, requirement PHP sudah diset ke:
 
 Jika masih muncul error `No version available for php 8.0.2`, pastikan perubahan `composer.json` sudah di-commit dan di-push ke GitHub, lalu redeploy Railway.
 
+Catatan lokal: XAMPP lama dengan PHP 8.0 tidak bisa menjalankan `composer install` normal setelah perubahan ini. Untuk development lokal, upgrade XAMPP/PHP ke 8.2 atau gunakan `composer install --ignore-platform-req=php` hanya jika benar-benar perlu.
+
 EMCO juga membutuhkan PDO MySQL untuk koneksi database:
 
 ```json

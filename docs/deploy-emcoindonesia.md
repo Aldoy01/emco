@@ -10,7 +10,7 @@ https://emcoindonesia.com
 
 Pastikan hosting mendukung:
 
-- PHP 8.0 atau lebih baru.
+- PHP 8.2 atau lebih baru.
 - MySQL/MariaDB.
 - Composer.
 - Extension PHP umum Laravel: `openssl`, `pdo`, `mbstring`, `tokenizer`, `xml`, `ctype`, `json`, `fileinfo`.
@@ -66,6 +66,18 @@ php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 ```
+
+Jika komputer lokal masih memakai XAMPP PHP 8.0 seperti `PHP 8.0.30`, command `composer install` akan gagal karena project production/Railway sekarang memakai PHP 8.2. Pilih salah satu:
+
+1. Upgrade PHP/XAMPP lokal ke PHP 8.2, ini yang paling rapi.
+2. Jika hanya ingin lanjut deploy dan `vendor/` lokal sudah ada, lewati `composer install` di lokal.
+3. Jika terpaksa install dari lokal PHP 8.0, gunakan:
+
+```bash
+composer install --no-dev --optimize-autoloader --ignore-platform-req=php
+```
+
+Untuk hosting production tetap gunakan PHP 8.2 atau lebih baru.
 
 Lalu upload folder project ke hosting sebagai `emco-app`.
 
