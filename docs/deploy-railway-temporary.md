@@ -62,6 +62,15 @@ Untuk EMCO, requirement PHP sudah diset ke:
 
 Jika masih muncul error `No version available for php 8.0.2`, pastikan perubahan `composer.json` sudah di-commit dan di-push ke GitHub, lalu redeploy Railway.
 
+EMCO juga membutuhkan PDO MySQL untuk koneksi database:
+
+```json
+"ext-pdo": "*",
+"ext-pdo_mysql": "*"
+```
+
+Jika log Railway menampilkan `could not find driver`, pastikan perubahan ini sudah ter-push ke GitHub dan deploy ulang dari commit terbaru.
+
 Untuk `APP_KEY`, generate dari lokal:
 
 ```bash
@@ -100,6 +109,8 @@ DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}
 ```
 
 Nama `MySQL` menyesuaikan nama database service di Railway. Jika service database diberi nama lain, sesuaikan prefix-nya.
+
+Jika log menampilkan query ke database `forge`, berarti variable DB belum masuk ke service Laravel. Pastikan `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`, `DB_HOST`, dan `DB_PORT` sudah ada di **Variables** service aplikasi, bukan hanya di service database.
 
 ## 4. Build Dan Start
 

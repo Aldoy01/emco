@@ -8217,6 +8217,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
         "php": "^8.2"
     },
     "platform-dev": {},
