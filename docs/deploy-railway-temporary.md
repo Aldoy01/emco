@@ -53,6 +53,15 @@ SALES_EMAIL=aldiansyah@tramatek.id
 SALES_WHATSAPP=6281292718681
 ```
 
+Railway/Railpack saat ini bisa gagal jika `composer.json` meminta PHP `8.0.2`.
+Untuk EMCO, requirement PHP sudah diset ke:
+
+```json
+"php": "^8.2"
+```
+
+Jika masih muncul error `No version available for php 8.0.2`, pastikan perubahan `composer.json` sudah di-commit dan di-push ke GitHub, lalu redeploy Railway.
+
 Untuk `APP_KEY`, generate dari lokal:
 
 ```bash
