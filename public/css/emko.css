@@ -81,3 +81,7 @@
 .home-category-card p{position:relative;z-index:1;min-height:72px;margin:0;color:#667085;font-size:14px;line-height:1.6}
 .home-category-card .category-link{position:relative;z-index:1;display:inline-flex!important;align-items:center;min-height:34px;margin-top:18px!important;padding:0 12px;border-radius:10px;background:#10243f;color:#fff!important;font-size:12px;font-weight:900}
 @media(max-width:700px){.home-category-grid{grid-template-columns:1fr}.home-category-card{min-height:auto}.home-category-card p{min-height:auto}}
+/* Auth password screens */
+.auth-section{display:grid;place-items:center;background:linear-gradient(180deg,#f8fbfd,#fff)}
+.auth-card{width:min(100%,620px);padding:26px;border:1px solid #d8dee8;border-radius:16px;background:#fff;box-shadow:0 20px 50px rgba(16,36,63,.10)}
+.field-error{display:block;margin-top:4px;color:#b42318;font-weight:800}
