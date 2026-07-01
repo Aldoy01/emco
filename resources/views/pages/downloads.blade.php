@@ -1,0 +1,3 @@
+@extends('layouts.public') @section('title','Download Catalogue EMKO') @section('content')
+<section class="page-title"><p class="eyebrow">Catalogue & Datasheet</p><h1>Download Katalog dan Datasheet</h1><p>Area file disiapkan untuk katalog umum, datasheet produk, pricelist, dan dokumen pendukung.</p></section><section class="section"><div class="download-grid"><a class="download-card" href="{{ route('quotation.create') }}"><strong>Katalog EMKO</strong><span>Minta katalog lengkap melalui sales</span></a>@foreach($products as $product)<a class="download-card" href="{{ route('products.show',$product) }}"><strong>{{ $product->product_name }}</strong><span>Detail dan datasheet</span></a>@endforeach</div></section>
+@endsection

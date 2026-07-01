@@ -1,0 +1,22 @@
+@php($productImage = $product->image ? asset($product->image) : asset('uploads/products/default-catalog.png'))
+<article class="product-card">
+    <a class="product-visual has-image" href="{{ route('products.show',$product) }}" aria-label="Lihat detail {{ $product->product_name }}">
+        <img src="{{ $productImage }}" alt="{{ $product->product_name }}">
+    </a>
+    <div class="product-body">
+        <div class="badge">{{ $product->category->name }}</div>
+        <h3><a href="{{ route('products.show',$product) }}">{{ $product->product_name }}</a></h3>
+        <p>{{ $product->short_description }}</p>
+        <div class="promo-price">
+            <div class="promo-top">
+                <span class="old-price">{{ $product->formatted_price_idr }}</span>
+                <span class="save-badge">Hemat {{ number_format($product->discount_percent,0) }}%</span>
+            </div>
+            <div class="final-price"><span>Promo</span><strong>{{ $product->formatted_final_price_idr }}</strong></div>
+        </div>
+        <div class="card-actions catalog-actions">
+            <a class="catalog-action catalog-buy" href="{{ route('products.show',$product) }}"><span>Beli</span></a>
+            <a class="catalog-action catalog-consult" href="{{ route('quotation.create',['product'=>$product->id]) }}"><span>Sales</span></a>
+        </div>
+    </div>
+</article>

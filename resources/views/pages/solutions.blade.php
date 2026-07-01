@@ -1,0 +1,3 @@
+@extends('layouts.public') @section('title','Solusi Industri EMKO') @section('content')
+<section class="page-title"><p class="eyebrow">Industrial Solutions</p><h1>Solusi EMKO untuk Proyek B2B</h1><p>Rekomendasi awal untuk data center, rumah sakit, pabrik, gedung, infrastruktur, kontraktor listrik, dan integrator genset.</p></section><section class="section solution-grid"><article><h2>Data Center</h2><p>Prioritaskan synchronizing, load sharing, monitoring, dan workflow follow-up cepat.</p></article><article><h2>Rumah Sakit</h2><p>Fokus pada transfer switching, reliability, dan kebutuhan backup power kritikal.</p></article><article><h2>Pabrik dan Gedung</h2><p>Gunakan AMF/ATS controller sesuai panel dan pola operasional genset.</p></article></section>
+@endsection
