@@ -238,6 +238,12 @@ Cek fitur:
 
 ## 10. Update Deploy Berikutnya
 
+Untuk workflow lengkap update dari lokal ke GitHub lalu ke hosting, pakai dokumen:
+
+```text
+docs/workflow-github-hosting.md
+```
+
 Untuk update setelah ada perubahan:
 
 ```bash
