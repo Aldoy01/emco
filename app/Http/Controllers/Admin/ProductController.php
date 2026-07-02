@@ -57,7 +57,7 @@ class ProductController extends Controller
             'specifications_text' => 'nullable|string',
             'price_usd' => 'required|numeric|min:0',
             'discount_percent' => 'required|numeric|min:0|max:100',
-            'final_price_usd' => 'required|numeric|min:0',
+            'final_price_usd' => 'nullable|numeric|min:0',
             'price_note' => 'nullable|string|max:500',
             'datasheet_file' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -66,6 +66,7 @@ class ProductController extends Controller
         ]);
 
         $data['slug'] = Str::slug($data['product_name']);
+        $data['final_price_usd'] = round(((float) $data['price_usd']) * (100 - (float) $data['discount_percent']) / 100, 2);
         $data['features'] = collect(preg_split('/\r\n|\r|\n/', $request->features_text ?? ''))->filter()->values()->all();
         $data['specifications'] = collect(preg_split('/\r\n|\r|\n/', $request->specifications_text ?? ''))->filter()->values()->all();
         $data['is_featured'] = $request->boolean('is_featured');
