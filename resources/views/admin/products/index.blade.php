@@ -9,7 +9,7 @@
 <section class="admin-panel crm-card">
     <div class="table-wrap crm-table-wrap">
         <table class="crm-table">
-            <thead><tr><th>Produk</th><th>Kategori</th><th>Harga</th><th>Setelah Diskon</th><th>Status</th><th></th></tr></thead>
+            <thead><tr><th>Produk</th><th>Kategori</th><th>Harga Dasar</th><th>Harga Diskon</th><th>Status</th><th></th></tr></thead>
             <tbody>
             @foreach($products as $product)
                 <tr>

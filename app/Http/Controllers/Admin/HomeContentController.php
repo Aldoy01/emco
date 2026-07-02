@@ -85,7 +85,7 @@ class HomeContentController extends Controller
             'benefit_heading' => 'Dibangun untuk kebutuhan proyek teknikal',
             'benefits' => [
                 ['title' => 'Produk lengkap', 'body' => 'AMF, ATS, synchronizing, load sharing, monitoring, mini controller, dan battery charger dalam satu katalog.'],
-                ['title' => 'Harga Rupiah', 'body' => 'Estimasi harga tampil dalam Rupiah dengan promo, diskon, dan pricelist yang mudah dibandingkan.'],
+                ['title' => 'Harga Rupiah', 'body' => 'Harga dasar dan harga diskon tampil dalam Rupiah sehingga mudah dibandingkan di katalog dan pricelist.'],
                 ['title' => 'Comparison table', 'body' => 'Bandingkan dimensi, input/output, komunikasi, remote monitoring, dan fitur setiap controller.'],
                 ['title' => 'Invoice checkout', 'body' => 'Customer dapat membeli langsung, membuat akun, menerima invoice, dan mengirim konfirmasi pembayaran.'],
             ],

@@ -9,10 +9,10 @@
         <p>{{ $product->short_description }}</p>
         <div class="promo-price">
             <div class="promo-top">
-                <span class="old-price">{{ $product->formatted_price_idr }}</span>
+                <span class="old-price"><b>Harga Dasar</b> <del>{{ $product->formatted_price_idr }}</del></span>
                 <span class="save-badge">Hemat {{ number_format($product->discount_percent,0) }}%</span>
             </div>
-            <div class="final-price"><span>Promo</span><strong>{{ $product->formatted_final_price_idr }}</strong></div>
+            <div class="final-price"><span>Harga Diskon</span><strong>{{ $product->formatted_final_price_idr }}</strong></div>
         </div>
         <div class="card-actions catalog-actions">
             <a class="catalog-action catalog-buy" href="{{ route('products.show',$product) }}"><span>Beli</span></a>

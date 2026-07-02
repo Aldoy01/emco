@@ -4,7 +4,7 @@
 <section class="page-title">
     <p class="eyebrow">Indonesia 2026</p>
     <h1>Pricelist Produk EMKO</h1>
-    <p>Harga ditampilkan dalam Rupiah sebagai estimasi setelah diskon. Harga belum termasuk pajak, shipping, instalasi, konfigurasi, dan biaya proyek.</p>
+    <p>Harga ditampilkan dalam Rupiah dengan harga dasar dan harga diskon. Harga belum termasuk pajak, shipping, instalasi, konfigurasi, dan biaya proyek.</p>
 </section>
 <section class="section">
     <div class="table-wrap pricelist-table-wrap">
@@ -13,9 +13,9 @@
                 <tr>
                     <th>Product Code</th>
                     <th>Kategori</th>
-                    <th>Harga Rupiah</th>
+                    <th>Harga Dasar</th>
                     <th>Disc</th>
-                    <th>Setelah Diskon</th>
+                    <th>Harga Diskon</th>
                     <th>Detail</th>
                     <th>Aksi</th>
                 </tr>

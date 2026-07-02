@@ -79,9 +79,9 @@ class PageController extends Controller
                 ['Product Code', [$product->product_code ?: '-']],
                 ['Kategori', [$product->category->name]],
                 ['Deskripsi', [$product->short_description ?: '-']],
-                ['Harga Awal', [$product->formatted_price_idr]],
+                ['Harga Dasar', [$product->formatted_price_idr]],
                 ['Diskon', [number_format($product->discount_percent, 0) . '%']],
-                ['Harga Promo', [$product->formatted_final_price_idr]],
+                ['Harga Diskon', [$product->formatted_final_price_idr]],
                 ['Status', [ucwords(str_replace('_', ' ', $product->status))]],
             ];
 
