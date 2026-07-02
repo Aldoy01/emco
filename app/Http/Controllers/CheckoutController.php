@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class CheckoutController extends Controller
 {
@@ -63,7 +64,7 @@ class CheckoutController extends Controller
 
         if (! $request->user()) {
             $rules['email'][] = Rule::unique('users', 'email');
-            $rules['password'] = 'required|string|min:8|confirmed';
+            $rules['password'] = ['required', 'string', Password::defaults(), 'confirmed'];
         }
 
         $data = $request->validate($rules);

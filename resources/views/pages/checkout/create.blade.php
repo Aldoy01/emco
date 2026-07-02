@@ -84,7 +84,7 @@
                     <label>Kode Pos<input name="postal_code" value="{{ old('postal_code') }}"></label>
                     @guest
                         <label>Sandi<input type="password" name="password" required></label>
-                        <div class="password-tip"><strong>Tips password yang baik</strong><span>Gunakan minimal 8 karakter. Lebih baik jika ada huruf besar, kecil, angka, dan simbol.</span></div>
+                        <div class="password-tip"><strong>Tips password yang baik</strong><span>Gunakan minimal 10 karakter dengan huruf besar, kecil, angka, dan simbol.</span></div>
                         <label>Konfirmasi Sandi<input type="password" name="password_confirmation" required></label>
                     @endguest
                     <label>Catatan Pembelian <span>(Opsional)</span><textarea name="notes" rows="3" placeholder="Nama proyek, NPWP, deadline, atau catatan invoice">{{ old('notes') }}</textarea></label>

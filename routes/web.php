@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\HomeContentController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\QuotationController as AdminQuotationController;
+use App\Http\Controllers\Admin\SecurityController as AdminSecurityController;
+use App\Http\Controllers\Auth\AdminTwoFactorController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\MemberProfileController;
@@ -40,9 +42,15 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/produk/{product:slug}', [PageController::class,'product'])->name('products.show');
 
-Auth::routes(['register' => true]);
+Auth::routes(['register' => true, 'verify' => true]);
 
-Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(function(){
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function(){
+    Route::get('two-factor', [AdminTwoFactorController::class, 'show'])->name('two-factor.show');
+    Route::post('two-factor', [AdminTwoFactorController::class, 'verify'])->middleware('throttle:6,1')->name('two-factor.verify');
+    Route::post('two-factor/resend', [AdminTwoFactorController::class, 'resend'])->middleware('throttle:3,1')->name('two-factor.resend');
+});
+
+Route::middleware(['auth','admin','admin.2fa'])->prefix('admin')->name('admin.')->group(function(){
     Route::get('/', [DashboardController::class,'index'])->name('dashboard');
     Route::resource('products', AdminProductController::class)->except('show');
     Route::get('quotations/export', [AdminQuotationController::class,'export'])->name('quotations.export');
@@ -51,4 +59,5 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
     Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update']);
     Route::get('content/home', [HomeContentController::class, 'edit'])->name('content.home.edit');
     Route::put('content/home', [HomeContentController::class, 'update'])->name('content.home.update');
+    Route::get('security', [AdminSecurityController::class, 'index'])->name('security.index');
 });

@@ -38,6 +38,7 @@ APP_NAME="EMCO Indonesia"
 APP_ENV=production
 APP_DEBUG=false
 APP_URL=https://url-sementara-railway.up.railway.app
+SESSION_SECURE_COOKIE=true
 
 LOG_CHANNEL=stderr
 LOG_LEVEL=error

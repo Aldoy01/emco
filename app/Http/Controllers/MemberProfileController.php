@@ -35,7 +35,7 @@ class MemberProfileController extends Controller
     {
         $data = $request->validate([
             'current_password' => 'required|string',
-            'password' => ['required', 'confirmed', Password::min(8)],
+            'password' => ['required', 'confirmed', Password::defaults()],
         ]);
 
         if (! Hash::check($data['current_password'], $request->user()->password)) {

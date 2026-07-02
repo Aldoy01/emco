@@ -1,28 +1,29 @@
-@extends('layouts.app')
+@extends('layouts.public')
+
+@section('title','Verifikasi Email - EMCO Indonesia')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Verify Your Email Address') }}</div>
+<section class="page-title auth-title">
+    <p class="eyebrow">Verifikasi Akun</p>
+    <h1>Verifikasi Email</h1>
+    <p>Cek email Anda untuk mengaktifkan akun pembeli EMCO.</p>
+</section>
 
-                <div class="card-body">
-                    @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
-                            {{ __('A fresh verification link has been sent to your email address.') }}
-                        </div>
-                    @endif
+<section class="section auth-section">
+    <div class="auth-card rfq-form">
+        @if (session('resent'))
+            <div class="alert success">Link verifikasi baru sudah dikirim ke email Anda.</div>
+        @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
-                    <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
-                    </form>
-                </div>
+        <p>Sebelum melanjutkan, buka email Anda dan klik link verifikasi akun. Jika belum menerima email, kirim ulang link verifikasi.</p>
+
+        <form method="POST" action="{{ route('verification.resend') }}">
+            @csrf
+            <div class="form-actions">
+                <button class="btn btn-gold" type="submit">Kirim Ulang Verifikasi</button>
+                <a class="btn btn-outline" href="{{ route('home') }}">Kembali ke Home</a>
             </div>
-        </div>
+        </form>
     </div>
-</div>
+</section>
 @endsection

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 class DatabaseSeeder extends Seeder {
     public function run(){
-        User::updateOrCreate(['email'=>'admin@emko.local'], ['name'=>'Admin EMKO','password'=>Hash::make('password'),'is_admin'=>true]);
+        User::updateOrCreate(['email'=>'admin@emko.local'], ['name'=>'Admin EMKO','password'=>Hash::make('password'),'email_verified_at'=>now(),'is_admin'=>true]);
         $cats = ['Synchronizing & Load Sharing'=>'Controller untuk synchronizing, AMF, load sharing, dan integrasi generator dengan jaringan.','Automatic Gen-Set Controller'=>'Controller automatic genset untuk start/stop, proteksi, dan transfer switching.','Automatic Transfer Switching'=>'Controller ATS untuk perpindahan sumber daya otomatis.','Mini/Midi Controller'=>'Controller compact untuk kebutuhan panel genset, pump, dan engine protection.','Communication & Monitoring'=>'Modul komunikasi dan remote monitoring untuk visualisasi genset.','Battery Charger'=>'Gencharger untuk pengisian baterai genset.'];
         $catModels = collect($cats)->mapWithKeys(fn($desc,$name)=>[$name=>Category::updateOrCreate(['slug'=>Str::slug($name)], ['name'=>$name,'description'=>$desc])]);
         $products = [

@@ -124,6 +124,7 @@ APP_NAME="EMCO Indonesia"
 APP_ENV=production
 APP_DEBUG=false
 APP_URL=https://emcoindonesia.com
+SESSION_SECURE_COOKIE=true
 
 DB_DATABASE=nama_database_hosting
 DB_USERNAME=user_database_hosting
