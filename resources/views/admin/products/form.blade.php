@@ -2,6 +2,7 @@
 @section('title', $product->exists ? 'Edit Produk' : 'Tambah Produk')
 @section('page_title', $product->exists ? 'Edit Produk' : 'Tambah Produk')
 @section('content')
+@php($hideCommercial = config('emko.hide_commercial_values'))
 <form class="rfq-form admin-panel crm-card" method="post" enctype="multipart/form-data" action="{{ $product->exists ? route('admin.products.update',$product) : route('admin.products.store') }}">
     @csrf
     @if($product->exists) @method('PUT') @endif
@@ -25,9 +26,9 @@
                     <option value="discontinued" @selected(old('status',$product->status)=='discontinued')>Discontinued</option>
                 </select>
             </label>
-            <label>Harga Dasar (nilai pricelist)<input type="number" step="0.01" name="price_usd" value="{{ old('price_usd',$product->price_usd) }}" required></label>
-            <label>Discount %<input type="number" step="0.01" name="discount_percent" value="{{ old('discount_percent',$product->discount_percent ?: 5) }}" required></label>
-            <label>Harga Diskon (nilai pricelist)<input type="number" step="0.01" name="final_price_usd" value="{{ old('final_price_usd',$product->final_price_usd) }}" required></label>
+            <label>Harga Dasar (nilai pricelist)<input type="number" step="0.01" name="price_usd" value="{{ $hideCommercial ? old('price_usd') : old('price_usd',$product->price_usd) }}" required></label>
+            <label>Discount %<input type="number" step="0.01" name="discount_percent" value="{{ $hideCommercial ? old('discount_percent') : old('discount_percent',$product->discount_percent ?: 5) }}" required></label>
+            <label>Harga Diskon (nilai pricelist)<input type="number" step="0.01" name="final_price_usd" value="{{ $hideCommercial ? old('final_price_usd') : old('final_price_usd',$product->final_price_usd) }}" required></label>
             <label>Datasheet URL<input name="datasheet_file" value="{{ old('datasheet_file',$product->datasheet_file) }}"></label>
         </div>
 

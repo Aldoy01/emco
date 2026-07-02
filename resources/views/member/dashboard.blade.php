@@ -1,6 +1,7 @@
 @extends('layouts.public')
 @section('title','Dashboard Member EMKO')
 @section('content')
+@php($hideCommercial = config('emko.hide_commercial_values'))
 <section class="page-title member-title">
     <p class="eyebrow">Member Area</p>
     <h1>Dashboard Member</h1>
@@ -35,7 +36,7 @@
                 @forelse($orders as $order)
                     <tr>
                         <td><strong>{{ $order->invoice_number }}</strong></td>
-                        <td>{{ $order->product->product_name }}<br><small>Qty {{ $order->quantity }}</small></td>
+                        <td>{{ $order->product->product_name }}<br><small>Qty {{ $hideCommercial ? '' : $order->quantity }}</small></td>
                         <td>{{ $order->formatted_total }}</td>
                         <td><span class="status-pill status-{{ $order->status }}">{{ str_replace('_',' ', $order->status) }}</span></td>
                         <td>{{ $order->created_at->format('d M Y') }}</td>

@@ -2,6 +2,7 @@
 @section('title', 'Pembelian & Pembayaran')
 @section('page_title', 'Pembelian & Pembayaran')
 @section('content')
+@php($hideCommercial = config('emko.hide_commercial_values'))
 <section class="crm-hero-panel small">
     <div>
         <p class="crm-kicker">Invoice & payment inbox</p>
@@ -35,7 +36,7 @@
                 <tr>
                     <td><strong>{{ $order->invoice_number }}</strong><br><small>{{ $order->created_at->format('d M Y H:i') }}</small></td>
                     <td><strong>{{ $order->customer_name }}</strong><br><small>{{ $order->email }} · {{ $order->phone }}</small></td>
-                    <td>{{ $order->product->product_name }}<br><small>Qty {{ $order->quantity }}</small></td>
+                    <td>{{ $order->product->product_name }}<br><small>Qty {{ $hideCommercial ? '' : $order->quantity }}</small></td>
                     <td><strong>{{ $order->formatted_total }}</strong></td>
                     <td><span class="status-pill status-{{ $order->status }}">{{ $statuses[$order->status] ?? $order->status }}</span></td>
                     <td>

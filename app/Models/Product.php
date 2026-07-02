@@ -28,11 +28,19 @@ class Product extends Model
 
     public function getFormattedPriceIdrAttribute(): string
     {
+        if (config('emko.hide_commercial_values')) {
+            return '';
+        }
+
         return 'Rp ' . number_format($this->price_idr, 0, ',', '.');
     }
 
     public function getFormattedFinalPriceIdrAttribute(): string
     {
+        if (config('emko.hide_commercial_values')) {
+            return '';
+        }
+
         return 'Rp ' . number_format($this->final_price_idr, 0, ',', '.');
     }
 }

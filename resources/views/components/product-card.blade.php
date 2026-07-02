@@ -1,4 +1,5 @@
 @php($productImage = $product->image ? asset($product->image) : asset('uploads/products/default-catalog.png'))
+@php($hideCommercial = config('emko.hide_commercial_values'))
 <article class="product-card">
     <a class="product-visual has-image" href="{{ route('products.show',$product) }}" aria-label="Lihat detail {{ $product->product_name }}">
         <img src="{{ $productImage }}" alt="{{ $product->product_name }}">
@@ -10,7 +11,7 @@
         <div class="promo-price">
             <div class="promo-top">
                 <span class="old-price"><b>Harga Dasar</b> <del>{{ $product->formatted_price_idr }}</del></span>
-                <span class="save-badge">Hemat {{ number_format($product->discount_percent,0) }}%</span>
+                <span class="save-badge">{{ $hideCommercial ? '' : 'Hemat ' . number_format($product->discount_percent,0) . '%' }}</span>
             </div>
             <div class="final-price"><span>Harga Diskon</span><strong>{{ $product->formatted_final_price_idr }}</strong></div>
         </div>

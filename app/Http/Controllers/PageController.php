@@ -37,6 +37,7 @@ class PageController extends Controller
 
     public function product(Product $product)
     {
+        $hideCommercial = config('emko.hide_commercial_values');
         $related = Product::with('category')
             ->where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
@@ -80,7 +81,7 @@ class PageController extends Controller
                 ['Kategori', [$product->category->name]],
                 ['Deskripsi', [$product->short_description ?: '-']],
                 ['Harga Dasar', [$product->formatted_price_idr]],
-                ['Diskon', [number_format($product->discount_percent, 0) . '%']],
+                ['Diskon', [$hideCommercial ? '' : number_format($product->discount_percent, 0) . '%']],
                 ['Harga Diskon', [$product->formatted_final_price_idr]],
                 ['Status', [ucwords(str_replace('_', ' ', $product->status))]],
             ];

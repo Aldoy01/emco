@@ -1,6 +1,7 @@
 @extends('layouts.public')
 @section('title','Pricelist EMKO Indonesia 2026 - Rupiah')
 @section('content')
+@php($hideCommercial = config('emko.hide_commercial_values'))
 <section class="page-title">
     <p class="eyebrow">Indonesia 2026</p>
     <h1>Pricelist Produk EMKO</h1>
@@ -26,7 +27,7 @@
                         <td><strong>{{ $product->product_code }}</strong><br><small>{{ $product->short_description }}</small></td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->formatted_price_idr }}</td>
-                        <td>{{ number_format($product->discount_percent,0) }}%</td>
+                        <td>{{ $hideCommercial ? '' : number_format($product->discount_percent,0) . '%' }}</td>
                         <td><strong>{{ $product->formatted_final_price_idr }}</strong></td>
                         <td><a class="table-action detail" href="{{ route('products.show', $product) }}">Lihat Detail</a></td>
                         <td>

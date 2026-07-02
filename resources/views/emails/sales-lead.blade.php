@@ -14,7 +14,7 @@
 <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Email</td><td style="border-bottom:1px solid #e5eaf2;">{{ $quotation->lead->email }}</td></tr>
 <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Telepon/WA</td><td style="border-bottom:1px solid #e5eaf2;">{{ $quotation->lead->phone }}</td></tr>
 <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Produk</td><td style="border-bottom:1px solid #e5eaf2;"><strong>{{ $quotation->product->product_name }}</strong></td></tr>
-<tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Qty</td><td style="border-bottom:1px solid #e5eaf2;">{{ $quotation->quantity }}</td></tr>
+<tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Qty</td><td style="border-bottom:1px solid #e5eaf2;">{{ config('emko.hide_commercial_values') ? '' : $quotation->quantity }}</td></tr>
 <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Lokasi Proyek</td><td style="border-bottom:1px solid #e5eaf2;">{{ $quotation->project_location }}</td></tr>
 <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Deadline</td><td style="border-bottom:1px solid #e5eaf2;">{{ optional($quotation->project_deadline)->format('d M Y') ?: '-' }}</td></tr>
 </table>

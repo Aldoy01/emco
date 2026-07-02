@@ -2,6 +2,7 @@
 @section('title', 'Dashboard CRM EMKO')
 @section('page_title', 'Sales Dashboard')
 @section('content')
+@php($hideCommercial = config('emko.hide_commercial_values'))
 <section class="crm-hero-panel">
     <div>
         <p class="crm-kicker">Lead generation snapshot</p>
@@ -51,7 +52,7 @@
                 <tr>
                     <td><strong>{{ $rfq->lead->company }}</strong><br><small>{{ $rfq->lead->name }} Â· {{ $rfq->lead->phone }}</small></td>
                     <td>{{ $rfq->product->product_name }}</td>
-                    <td><span class="qty-pill">{{ $rfq->quantity }}</span></td>
+                    <td><span class="qty-pill">{{ $hideCommercial ? '' : $rfq->quantity }}</span></td>
                     <td><span class="status-pill status-{{ $rfq->status }}">{{ \App\Models\QuotationRequest::STATUSES[$rfq->status] ?? $rfq->status }}</span></td>
                     <td>{{ $rfq->created_at->format('d M Y') }}</td>
                 </tr>
