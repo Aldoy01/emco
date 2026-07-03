@@ -80,6 +80,7 @@ class AdminTwoFactorController extends Controller
         $request->session()->put('admin_2fa_expires_at', now()->addMinutes(10));
         if (config('app.debug')) {
             $request->session()->put('admin_2fa_plain', $code);
+            return;
         }
 
         try {
