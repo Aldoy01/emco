@@ -18,12 +18,12 @@ class Product extends Model
 
     public function getPriceIdrAttribute(): int
     {
-        return (int) round(((float) $this->price_usd) * config('emko.usd_to_idr_rate', 16000));
+        return (int) round((float) $this->price_usd);
     }
 
     public function getFinalPriceIdrAttribute(): int
     {
-        return (int) round(((float) $this->final_price_usd) * config('emko.usd_to_idr_rate', 16000));
+        return (int) round((float) $this->final_price_usd);
     }
 
     public function getFormattedPriceIdrAttribute(): string

@@ -25,9 +25,9 @@
                     <option value="discontinued" @selected(old('status',$product->status)=='discontinued')>Discontinued</option>
                 </select>
             </label>
-            <label>Harga Dasar (nilai pricelist)<input id="priceUsdInput" type="number" step="0.01" name="price_usd" value="{{ old('price_usd',$product->price_usd) }}"></label>
+            <label>Harga Dasar (Rp)<input id="priceUsdInput" type="number" step="1" min="0" name="price_usd" value="{{ old('price_usd',$product->price_usd) }}"></label>
             <label>Discount %<input id="discountInput" type="number" step="0.01" name="discount_percent" value="{{ old('discount_percent',$product->discount_percent) }}"></label>
-            <label>Harga Diskon (otomatis)<input id="finalPriceInput" type="number" step="0.01" name="final_price_usd" value="{{ old('final_price_usd',$product->final_price_usd) }}" readonly><small>Terisi otomatis dari Harga Dasar dikurangi Discount %.</small></label>
+            <label>Harga Diskon (Rp otomatis)<input id="finalPriceInput" type="number" step="1" min="0" name="final_price_usd" value="{{ old('final_price_usd',$product->final_price_usd) }}" readonly><small>Terisi otomatis dari Harga Dasar dikurangi Discount %.</small></label>
             <label>Datasheet URL<input name="datasheet_file" value="{{ old('datasheet_file',$product->datasheet_file) }}"></label>
         </div>
 

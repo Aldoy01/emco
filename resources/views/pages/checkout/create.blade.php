@@ -39,7 +39,7 @@
 <section class="checkout-page"><div class="checkout-review-shell">
     <div class="checkout-titlebar">
         <h1>Tinjau dan Checkout</h1>
-        <div class="currency-toggle"><span class="active">IDR</span><span>USD</span></div>
+        <div class="currency-toggle"><span class="active">IDR</span></div>
     </div>
 
     <div class="review-table">
