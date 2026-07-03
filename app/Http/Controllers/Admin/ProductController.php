@@ -48,6 +48,14 @@ class ProductController extends Controller
 
     private function validated(Request $request, ?Product $product = null): array
     {
+        if ($product && config('emko.hide_commercial_values')) {
+            $request->merge([
+                'price_usd' => $request->filled('price_usd') ? $request->input('price_usd') : $product->price_usd,
+                'discount_percent' => $request->filled('discount_percent') ? $request->input('discount_percent') : $product->discount_percent,
+                'final_price_usd' => $request->filled('final_price_usd') ? $request->input('final_price_usd') : $product->final_price_usd,
+            ]);
+        }
+
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'product_code' => 'required|string|max:120',
