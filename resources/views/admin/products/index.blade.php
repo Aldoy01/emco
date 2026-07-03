@@ -20,8 +20,8 @@
                         </div>
                     </td>
                     <td>{{ $product->category->name }}</td>
-                    <td>{{ $product->formatted_price_idr }}</td>
-                    <td><strong>{{ $product->formatted_final_price_idr }}</strong></td>
+                    <td>{{ 'Rp ' . number_format($product->price_idr, 0, ',', '.') }}</td>
+                    <td><strong>{{ 'Rp ' . number_format($product->final_price_idr, 0, ',', '.') }}</strong></td>
                     <td><span class="status-pill status-{{ $product->status }}">{{ str_replace('_', ' ', ucfirst($product->status)) }}</span></td>
                     <td><a class="soft-link" href="{{ route('admin.products.edit',$product) }}">Edit</a></td>
                 </tr>
