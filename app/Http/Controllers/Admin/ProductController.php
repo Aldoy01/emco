@@ -48,14 +48,6 @@ class ProductController extends Controller
 
     private function validated(Request $request, ?Product $product = null): array
     {
-        if ($product && config('emko.hide_commercial_values')) {
-            $request->merge([
-                'price_usd' => $request->filled('price_usd') ? $request->input('price_usd') : $product->price_usd,
-                'discount_percent' => $request->filled('discount_percent') ? $request->input('discount_percent') : $product->discount_percent,
-                'final_price_usd' => $request->filled('final_price_usd') ? $request->input('final_price_usd') : $product->final_price_usd,
-            ]);
-        }
-
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'product_code' => 'required|string|max:120',
@@ -63,8 +55,8 @@ class ProductController extends Controller
             'short_description' => 'nullable|string|max:500',
             'features_text' => 'nullable|string',
             'specifications_text' => 'nullable|string',
-            'price_usd' => 'required|numeric|min:0',
-            'discount_percent' => 'required|numeric|min:0|max:100',
+            'price_usd' => 'nullable|numeric|min:0',
+            'discount_percent' => 'nullable|numeric|min:0|max:100',
             'final_price_usd' => 'nullable|numeric|min:0',
             'price_note' => 'nullable|string|max:500',
             'datasheet_file' => 'nullable|string|max:255',
@@ -73,6 +65,8 @@ class ProductController extends Controller
             'is_featured' => 'nullable|boolean',
         ]);
 
+        $data['price_usd'] = $request->filled('price_usd') ? (float) $request->input('price_usd') : (float) ($product->price_usd ?? 0);
+        $data['discount_percent'] = $request->filled('discount_percent') ? (float) $request->input('discount_percent') : (float) ($product->discount_percent ?? 0);
         $data['slug'] = Str::slug($data['product_name']);
         $data['final_price_usd'] = round(((float) $data['price_usd']) * (100 - (float) $data['discount_percent']) / 100, 2);
         $data['features'] = collect(preg_split('/\r\n|\r|\n/', $request->features_text ?? ''))->filter()->values()->all();

@@ -54,7 +54,16 @@
     <label>Catatan Harga<input name="price_note" value="{{ old('price_note',$product->price_note) }}"></label>
     <label class="check"><input type="checkbox" name="is_featured" value="1" @checked(old('is_featured',$product->is_featured))> Produk unggulan</label>
 
-    @if($errors->any())<div class="alert error">Mohon periksa kembali data produk.</div>@endif
+    @if($errors->any())
+        <div class="alert error">
+            <strong>Produk belum bisa disimpan.</strong>
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <button class="btn btn-gold">Simpan Produk</button>
 </form>
 <script>
