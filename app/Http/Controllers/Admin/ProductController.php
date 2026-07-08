@@ -89,11 +89,11 @@ class ProductController extends Controller
     private function storeImage(Request $request): string
     {
         $file = $request->file('image');
-        $directory = base_path('uploads/products');
+        $directory = config('emko.product_upload_path', public_path('uploads/products'));
         File::ensureDirectoryExists($directory);
         $filename = Str::slug($request->product_name) . '-' . time() . '.' . $file->getClientOriginalExtension();
         $file->move($directory, $filename);
-        return 'uploads/products/' . $filename;
+        return trim(config('emko.product_upload_url', 'uploads/products'), '/') . '/' . $filename;
     }
 
     private function deleteImage(?string $image): void
@@ -102,9 +102,15 @@ class ProductController extends Controller
             return;
         }
 
-        $path = public_path($image);
-        if (File::exists($path)) {
-            File::delete($path);
+        $paths = [
+            public_path($image),
+            rtrim(config('emko.product_upload_path', public_path('uploads/products')), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . basename($image),
+        ];
+
+        foreach (array_unique($paths) as $path) {
+            if (File::exists($path)) {
+                File::delete($path);
+            }
         }
     }
 }

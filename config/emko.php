@@ -5,4 +5,6 @@ return [
     'sales_email' => env('SALES_EMAIL', 'aldiansyah@tramatek.id'),
     'sales_whatsapp' => env('SALES_WHATSAPP', '6281292718681'),
     'hide_commercial_values' => filter_var(env('EMKO_HIDE_COMMERCIAL_VALUES', true), FILTER_VALIDATE_BOOLEAN),
+    'product_upload_path' => env('PRODUCT_UPLOAD_PATH', public_path('uploads/products')),
+    'product_upload_url' => trim(env('PRODUCT_UPLOAD_URL', 'uploads/products'), '/'),
 ];
