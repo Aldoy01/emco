@@ -50,6 +50,7 @@
     <label>Deskripsi Singkat<textarea name="short_description">{{ old('short_description',$product->short_description) }}</textarea></label>
     <label>Fitur, satu baris per item<textarea name="features_text">{{ old('features_text',implode("\n",$product->features ?? [])) }}</textarea></label>
     <label>Spesifikasi, satu baris per item<textarea name="specifications_text">{{ old('specifications_text',implode("\n",$product->specifications ?? [])) }}</textarea></label>
+    <label>Informasi Pembelian<textarea name="purchase_information" placeholder="Contoh: Untuk pembelian produk ini, silakan hubungi sales untuk konfirmasi stok, jadwal pengiriman, dan kebutuhan konfigurasi proyek.">{{ old('purchase_information',$product->purchase_information) }}</textarea></label>
     <label>Catatan Harga<input name="price_note" value="{{ old('price_note',$product->price_note) }}"></label>
     <label class="check"><input type="checkbox" name="is_featured" value="1" @checked(old('is_featured',$product->is_featured))> Produk unggulan</label>
 

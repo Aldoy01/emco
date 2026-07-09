@@ -55,6 +55,7 @@ class ProductController extends Controller
             'short_description' => 'nullable|string|max:500',
             'features_text' => 'nullable|string',
             'specifications_text' => 'nullable|string',
+            'purchase_information' => 'nullable|string|max:1200',
             'price_usd' => 'nullable|numeric|min:0',
             'discount_percent' => 'nullable|numeric|min:0|max:100',
             'final_price_usd' => 'nullable|numeric|min:0',
