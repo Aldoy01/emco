@@ -6,7 +6,7 @@ Panduan ini untuk menjalankan EMCO dengan URL sementara dari Railway, misalnya:
 https://nama-project.up.railway.app
 ```
 
-Railway cocok untuk preview, demo ke klien, atau staging sebelum domain utama `https://emcoindonesia.com` dipasang.
+Railway cocok untuk preview, demo ke klien, atau staging sebelum domain utama `https://emkoindonesia.com` dipasang.
 
 Referensi resmi:
 
@@ -231,7 +231,7 @@ railway link
 railway up
 ```
 
-## 9. Jika Nanti Ingin Pakai Domain emcoindonesia.com
+## 9. Jika Nanti Ingin Pakai Domain emkoindonesia.com
 
 Di Railway:
 
@@ -241,8 +241,8 @@ Di Railway:
 4. Masukkan:
 
 ```text
-emcoindonesia.com
-www.emcoindonesia.com
+emkoindonesia.com
+www.emkoindonesia.com
 ```
 
 5. Railway akan memberi DNS record.
@@ -250,7 +250,7 @@ www.emcoindonesia.com
 7. Setelah aktif, ubah:
 
 ```env
-APP_URL=https://emcoindonesia.com
+APP_URL=https://emkoindonesia.com
 ```
 
 8. Redeploy.

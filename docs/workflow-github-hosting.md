@@ -23,7 +23,7 @@ https://github.com/Aldoy01/emco
 Domain production:
 
 ```text
-https://emcoindonesia.com
+https://emkoindonesia.com
 ```
 
 ## 1. Update Kode Di Lokal
@@ -164,7 +164,7 @@ Pastikan `.env` production di hosting berisi:
 APP_NAME="EMCO Indonesia"
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://emcoindonesia.com
+APP_URL=https://emkoindonesia.com
 
 SESSION_DRIVER=file
 SESSION_SECURE_COOKIE=true
@@ -178,12 +178,12 @@ DB_USERNAME=user_database_hosting
 DB_PASSWORD=password_database_hosting
 
 MAIL_MAILER=smtp
-MAIL_HOST=mail.emcoindonesia.com
+MAIL_HOST=mail.emkoindonesia.com
 MAIL_PORT=465
-MAIL_USERNAME=admin@emcoindonesia.com
+MAIL_USERNAME=admin@emkoindonesia.com
 MAIL_PASSWORD=password_email
 MAIL_ENCRYPTION=ssl
-MAIL_FROM_ADDRESS=admin@emcoindonesia.com
+MAIL_FROM_ADDRESS=admin@emkoindonesia.com
 MAIL_FROM_NAME="EMCO Indonesia"
 
 USD_TO_IDR_RATE=16000
@@ -209,11 +209,11 @@ php artisan config:cache
 Buka dan cek:
 
 ```text
-https://emcoindonesia.com
-https://emcoindonesia.com/produk
-https://emcoindonesia.com/pricelist
-https://emcoindonesia.com/login
-https://emcoindonesia.com/admin
+https://emkoindonesia.com
+https://emkoindonesia.com/produk
+https://emkoindonesia.com/pricelist
+https://emkoindonesia.com/login
+https://emkoindonesia.com/admin
 ```
 
 Cek admin:

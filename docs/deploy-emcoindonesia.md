@@ -3,7 +3,7 @@
 Panduan ini untuk deploy aplikasi Laravel EMCO ke domain:
 
 ```text
-https://emcoindonesia.com
+https://emkoindonesia.com
 ```
 
 ## 1. Kebutuhan Hosting
@@ -123,15 +123,15 @@ Isi minimal:
 APP_NAME="EMCO Indonesia"
 APP_ENV=production
 APP_DEBUG=false
-APP_URL=https://emcoindonesia.com
+APP_URL=https://emkoindonesia.com
 SESSION_SECURE_COOKIE=true
 
 DB_DATABASE=nama_database_hosting
 DB_USERNAME=user_database_hosting
 DB_PASSWORD=password_database_hosting
 
-MAIL_HOST=mail.emcoindonesia.com
-MAIL_USERNAME=admin@emcoindonesia.com
+MAIL_HOST=mail.emkoindonesia.com
+MAIL_USERNAME=admin@emkoindonesia.com
 MAIL_PASSWORD=password_email
 MAIL_ENCRYPTION=ssl
 MAIL_PORT=465
@@ -218,11 +218,11 @@ php artisan optimize
 Buka:
 
 ```text
-https://emcoindonesia.com
-https://emcoindonesia.com/login
-https://emcoindonesia.com/products
-https://emcoindonesia.com/pricelist
-https://emcoindonesia.com/admin
+https://emkoindonesia.com
+https://emkoindonesia.com/login
+https://emkoindonesia.com/products
+https://emkoindonesia.com/pricelist
+https://emkoindonesia.com/admin
 ```
 
 Cek fitur:
@@ -282,7 +282,7 @@ storage/logs/laravel.log
 
 Jika CSS/gambar tidak tampil:
 
-- Pastikan `APP_URL=https://emcoindonesia.com`.
+- Pastikan `APP_URL=https://emkoindonesia.com`.
 - Pastikan folder `css`, `images`, `uploads`, dan `storage` ada di `public_html`.
 - Clear cache browser.
 
