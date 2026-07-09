@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Admin\FinanceSettingController;
+use App\Models\ContentSetting;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -114,7 +116,10 @@ class CheckoutController extends Controller
     {
         $this->authorizeCustomerOrder($request, $order);
 
-        return view('pages.checkout.invoice', ['order' => $order->load('product')]);
+        return view('pages.checkout.invoice', [
+            'order' => $order->load('product'),
+            'finance' => ContentSetting::getValue('finance', FinanceSettingController::defaults()),
+        ]);
     }
 
     public function confirm(Request $request, Order $order)

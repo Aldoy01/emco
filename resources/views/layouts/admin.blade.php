@@ -19,6 +19,7 @@
             <a href="{{ route('admin.quotations.index') }}" class="{{ request()->routeIs('admin.quotations.*') ? 'active' : '' }}"><span>RF</span>Sales Leads</a>
             <a href="{{ route('admin.orders.index') }}" class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}"><span>PY</span>Pembelian & Pembayaran</a>
             <a href="{{ route('admin.content.home.edit') }}" class="{{ request()->routeIs('admin.content.*') ? 'active' : '' }}"><span>HM</span>Konten Home</a>
+            <a href="{{ route('admin.finance.edit') }}" class="{{ request()->routeIs('admin.finance.*') ? 'active' : '' }}"><span>FN</span>Finance & Invoice</a>
             <a href="{{ route('admin.security.index') }}" class="{{ request()->routeIs('admin.security.*') ? 'active' : '' }}"><span>SC</span>Security Logs</a>
             <a href="{{ route('home') }}"><span>WB</span>Website</a>
         </nav>

@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FinanceSettingController;
 use App\Http\Controllers\Admin\HomeContentController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
@@ -59,5 +60,7 @@ Route::middleware(['auth','admin','admin.2fa'])->prefix('admin')->name('admin.')
     Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update']);
     Route::get('content/home', [HomeContentController::class, 'edit'])->name('content.home.edit');
     Route::put('content/home', [HomeContentController::class, 'update'])->name('content.home.update');
+    Route::get('finance', [FinanceSettingController::class, 'edit'])->name('finance.edit');
+    Route::put('finance', [FinanceSettingController::class, 'update'])->name('finance.update');
     Route::get('security', [AdminSecurityController::class, 'index'])->name('security.index');
 });
