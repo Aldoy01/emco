@@ -37,7 +37,7 @@
 
 <section class="section muted home-featured">
     <div class="section-head"><div><p class="eyebrow">Featured Products</p><h2>Produk Unggulan</h2></div><a href="{{ route('pricelist') }}">Lihat pricelist</a></div>
-    <div class="product-grid">@foreach($featuredProducts as $product) @include('components.product-card',['product'=>$product]) @endforeach</div>
+    <div class="product-grid">@foreach($featuredProducts as $product) @include('components.product-card',['product'=>$product,'showPrice'=>true]) @endforeach</div>
 </section>
 
 <section class="section home-benefits">

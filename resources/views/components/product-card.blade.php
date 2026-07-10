@@ -1,5 +1,8 @@
 @php($productImage = $product->image ? asset($product->image) : asset('uploads/products/default-catalog.png'))
 @php($hideCommercial = config('emko.hide_commercial_values'))
+@php($showCommercial = ($showPrice ?? false) || ! $hideCommercial)
+@php($displayBasePrice = $showCommercial ? 'Rp ' . number_format($product->price_idr, 0, ',', '.') : '')
+@php($displayFinalPrice = $showCommercial ? 'Rp ' . number_format($product->final_price_idr, 0, ',', '.') : '')
 <article class="product-card">
     <a class="product-visual has-image" href="{{ route('products.show',$product) }}" aria-label="Lihat detail {{ $product->product_name }}">
         <img src="{{ $productImage }}" alt="{{ $product->product_name }}">
@@ -10,10 +13,10 @@
         <p>{{ $product->short_description }}</p>
         <div class="promo-price">
             <div class="promo-top">
-                <span class="old-price"><b>Harga Dasar</b> <del>{{ $product->formatted_price_idr }}</del></span>
-                <span class="save-badge">{{ $hideCommercial ? '' : 'Hemat ' . number_format($product->discount_percent,0) . '%' }}</span>
+                <span class="old-price"><b>Harga Dasar</b> <del>{{ $displayBasePrice }}</del></span>
+                <span class="save-badge">{{ $showCommercial ? 'Hemat ' . number_format($product->discount_percent,0) . '%' : '' }}</span>
             </div>
-            <div class="final-price"><span>Harga Diskon</span><strong>{{ $product->formatted_final_price_idr }}</strong></div>
+            <div class="final-price"><span>Harga Diskon</span><strong>{{ $displayFinalPrice }}</strong></div>
         </div>
         <div class="card-actions catalog-actions">
             <a class="catalog-action catalog-buy" href="{{ route('products.show',$product) }}"><span>Beli</span></a>
