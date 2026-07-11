@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\FinanceSettingController;
+use App\Mail\OrderInvoiceCreated;
 use App\Models\ContentSetting;
 use App\Models\Order;
 use App\Models\Product;
@@ -11,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -113,7 +115,9 @@ class CheckoutController extends Controller
             'notes' => $data['notes'] ?? null,
         ]);
 
-        return redirect()->route('checkout.invoice', $order)->with('success', 'Invoice berhasil dibuat. Instruksi pembayaran sudah tersedia di halaman ini.');
+        $this->sendInvoiceEmail($order);
+
+        return redirect()->route('checkout.invoice', $order)->with('success', 'Invoice berhasil dibuat. Instruksi pembayaran tersedia di halaman ini dan dikirim ke email customer jika konfigurasi email aktif.');
     }
 
     public function invoice(Request $request, Order $order)
@@ -187,5 +191,17 @@ class CheckoutController extends Controller
         } while (Order::where('invoice_number', $number)->exists());
 
         return $number;
+    }
+
+    private function sendInvoiceEmail(Order $order): void
+    {
+        try {
+            Mail::to($order->email)->send(new OrderInvoiceCreated(
+                $order->loadMissing('product'),
+                ContentSetting::getValue('finance', FinanceSettingController::defaults())
+            ));
+        } catch (\Throwable $exception) {
+            report($exception);
+        }
     }
 }
