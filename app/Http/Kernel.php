@@ -59,6 +59,7 @@ class Kernel extends HttpKernel
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
         'admin.2fa' => \App\Http\Middleware\EnsureAdminTwoFactor::class,
+        'admin.role' => \App\Http\Middleware\EnsureAdminRole::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,

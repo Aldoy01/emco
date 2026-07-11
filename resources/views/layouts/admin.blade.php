@@ -13,14 +13,26 @@
             <img class="crm-logo" src="{{ asset('images/emko-partnership.png') }}" alt="EMKO Partnership by Tramatekid">
             <small>Sales CRM</small>
         </a>
+        @php($adminUser = auth()->user())
         <nav class="crm-nav">
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"><span>DB</span>Dashboard</a>
-            <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products.*') ? 'active' : '' }}"><span>PR</span>Produk & Harga</a>
-            <a href="{{ route('admin.quotations.index') }}" class="{{ request()->routeIs('admin.quotations.*') ? 'active' : '' }}"><span>RF</span>Sales Leads</a>
-            <a href="{{ route('admin.orders.index') }}" class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}"><span>PY</span>Pembelian & Pembayaran</a>
-            <a href="{{ route('admin.content.home.edit') }}" class="{{ request()->routeIs('admin.content.*') ? 'active' : '' }}"><span>HM</span>Konten Home</a>
-            <a href="{{ route('admin.finance.edit') }}" class="{{ request()->routeIs('admin.finance.*') ? 'active' : '' }}"><span>FN</span>Finance & Invoice</a>
-            <a href="{{ route('admin.security.index') }}" class="{{ request()->routeIs('admin.security.*') ? 'active' : '' }}"><span>SC</span>Security Logs</a>
+            @if($adminUser->hasAdminRole(App\Models\User::ROLE_SUPER_ADMIN))
+                <a href="{{ route('admin.products.index') }}" class="{{ request()->routeIs('admin.products.*') ? 'active' : '' }}"><span>PR</span>Produk & Harga</a>
+                <a href="{{ route('admin.quotations.index') }}" class="{{ request()->routeIs('admin.quotations.*') ? 'active' : '' }}"><span>RF</span>Sales Leads</a>
+            @endif
+            @if($adminUser->hasAdminRole([App\Models\User::ROLE_SUPER_ADMIN, App\Models\User::ROLE_FINANCE, App\Models\User::ROLE_SHIPPING]))
+                <a href="{{ route('admin.orders.index') }}" class="{{ request()->routeIs('admin.orders.*') ? 'active' : '' }}"><span>PY</span>Pembelian & Pembayaran</a>
+            @endif
+            @if($adminUser->hasAdminRole(App\Models\User::ROLE_SUPER_ADMIN))
+                <a href="{{ route('admin.content.home.edit') }}" class="{{ request()->routeIs('admin.content.*') ? 'active' : '' }}"><span>HM</span>Konten Home</a>
+            @endif
+            @if($adminUser->hasAdminRole([App\Models\User::ROLE_SUPER_ADMIN, App\Models\User::ROLE_FINANCE]))
+                <a href="{{ route('admin.finance.edit') }}" class="{{ request()->routeIs('admin.finance.*') ? 'active' : '' }}"><span>FN</span>Finance & Invoice</a>
+            @endif
+            @if($adminUser->hasAdminRole(App\Models\User::ROLE_SUPER_ADMIN))
+                <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}"><span>US</span>Manajemen User</a>
+                <a href="{{ route('admin.security.index') }}" class="{{ request()->routeIs('admin.security.*') ? 'active' : '' }}"><span>SC</span>Security Logs</a>
+            @endif
             <a href="{{ route('home') }}"><span>WB</span>Website</a>
         </nav>
         <div class="crm-sidebar-card">
@@ -40,10 +52,11 @@
             </div>
             <div class="crm-user-chip">
                 <span>{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}</span>
-                <div><strong>{{ auth()->user()->name ?? 'Admin' }}</strong><small>Administrator</small></div>
+                <div><strong>{{ auth()->user()->name ?? 'Admin' }}</strong><small>{{ auth()->user()->roleLabel() }}</small></div>
             </div>
         </header>
         @if(session('success'))<div class="alert success">{{ session('success') }}</div>@endif
+        @if(session('error'))<div class="alert error">{{ session('error') }}</div>@endif
         @yield('content')
     </main>
 </body>

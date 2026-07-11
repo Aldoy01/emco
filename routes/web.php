@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\QuotationController as AdminQuotationController;
 use App\Http\Controllers\Admin\SecurityController as AdminSecurityController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Auth\AdminTwoFactorController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\MemberDashboardController;
@@ -53,14 +54,25 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function(){
 
 Route::middleware(['auth','admin','admin.2fa'])->prefix('admin')->name('admin.')->group(function(){
     Route::get('/', [DashboardController::class,'index'])->name('dashboard');
-    Route::resource('products', AdminProductController::class)->except('show');
-    Route::get('quotations/export', [AdminQuotationController::class,'export'])->name('quotations.export');
-    Route::resource('quotations', AdminQuotationController::class)->only(['index','show','update']);
-    Route::get('orders/{order:invoice_number}/proof', [AdminOrderController::class, 'proof'])->name('orders.proof');
-    Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update']);
-    Route::get('content/home', [HomeContentController::class, 'edit'])->name('content.home.edit');
-    Route::put('content/home', [HomeContentController::class, 'update'])->name('content.home.update');
-    Route::get('finance', [FinanceSettingController::class, 'edit'])->name('finance.edit');
-    Route::put('finance', [FinanceSettingController::class, 'update'])->name('finance.update');
-    Route::get('security', [AdminSecurityController::class, 'index'])->name('security.index');
+
+    Route::middleware('admin.role:super_admin')->group(function () {
+        Route::resource('products', AdminProductController::class)->except('show');
+        Route::get('quotations/export', [AdminQuotationController::class,'export'])->name('quotations.export');
+        Route::resource('quotations', AdminQuotationController::class)->only(['index','show','update']);
+        Route::get('content/home', [HomeContentController::class, 'edit'])->name('content.home.edit');
+        Route::put('content/home', [HomeContentController::class, 'update'])->name('content.home.update');
+        Route::get('security', [AdminSecurityController::class, 'index'])->name('security.index');
+        Route::put('users/{user}/reset-password', [AdminUserController::class, 'resetPassword'])->name('users.reset-password');
+        Route::resource('users', AdminUserController::class)->except('show', 'destroy');
+    });
+
+    Route::middleware('admin.role:super_admin,finance,shipping')->group(function () {
+        Route::get('orders/{order:invoice_number}/proof', [AdminOrderController::class, 'proof'])->name('orders.proof');
+        Route::resource('orders', AdminOrderController::class)->only(['index', 'show', 'update']);
+    });
+
+    Route::middleware('admin.role:super_admin,finance')->group(function () {
+        Route::get('finance', [FinanceSettingController::class, 'edit'])->name('finance.edit');
+        Route::put('finance', [FinanceSettingController::class, 'update'])->name('finance.update');
+    });
 });
