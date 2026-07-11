@@ -24,7 +24,7 @@ class PageController extends Controller
         $products = Product::with('category')
             ->when($request->filled('q'), fn($query) => $query->where(fn($q) => $q->where('product_code', 'like', '%' . $request->q . '%')->orWhere('product_name', 'like', '%' . $request->q . '%')))
             ->when($request->filled('category'), fn($query) => $query->whereHas('category', fn($q) => $q->where('slug', $request->category)))
-            ->orderBy('final_price_usd')
+            ->orderByDesc('final_price_usd')
             ->paginate(12)
             ->withQueryString();
 
@@ -111,7 +111,7 @@ class PageController extends Controller
     public function category(Category $category)
     {
         return view('pages.products.index', [
-            'products' => $category->products()->with('category')->paginate(12),
+            'products' => $category->products()->with('category')->orderByDesc('final_price_usd')->paginate(12),
             'categories' => Category::orderBy('name')->get(),
             'selectedCategory' => $category->slug,
             'categoryPage' => $category,
