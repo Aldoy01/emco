@@ -142,11 +142,14 @@ class CheckoutController extends Controller
         $this->authorizeCustomerOrder($request, $order);
 
         $data = $request->validate([
+            'invoice_number' => ['required', 'string', 'max:80', Rule::in([$order->invoice_number])],
             'payer_name' => 'required|string|max:160',
             'bank_name' => 'required|string|max:120',
             'transfer_date' => 'required|date',
             'amount' => 'required|numeric|min:1',
             'payment_proof' => 'nullable|file|mimes:jpg,jpeg,png,webp,pdf|max:3072',
+        ], [
+            'invoice_number.in' => 'Nomor invoice tidak sesuai dengan invoice yang sedang dikonfirmasi.',
         ]);
 
         $proofPath = $order->payment_proof;
@@ -169,7 +172,7 @@ class CheckoutController extends Controller
             'status' => 'payment_confirmation_sent',
             'payment_proof' => $proofPath,
             'paid_at' => now(),
-            'notes' => trim(($order->notes ? $order->notes . "\n\n" : '') . 'Konfirmasi pembayaran: ' . $data['payer_name'] . ' | ' . $data['bank_name'] . ' | ' . $data['transfer_date'] . ' | Rp ' . number_format((float) $data['amount'], 0, ',', '.')),
+            'notes' => trim(($order->notes ? $order->notes . "\n\n" : '') . 'Konfirmasi pembayaran invoice ' . $data['invoice_number'] . ': ' . $data['payer_name'] . ' | ' . $data['bank_name'] . ' | ' . $data['transfer_date'] . ' | Rp ' . number_format((float) $data['amount'], 0, ',', '.')),
         ]);
 
         return redirect()->route('checkout.invoice', $order)->with('success', 'Konfirmasi pembayaran berhasil dikirim. Admin akan memverifikasi pembayaran dan menghubungi Anda untuk pengiriman.');

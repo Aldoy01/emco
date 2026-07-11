@@ -5,10 +5,19 @@
 <section class="section narrow">
     <form class="rfq-form checkout-form" method="post" enctype="multipart/form-data" action="{{ route('checkout.confirm.store', $order) }}">
         @csrf
-        <div class="form-grid"><label>Nama Pengirim<input name="payer_name" value="{{ old('payer_name', $order->customer_name) }}" required></label><label>Bank Pengirim<input name="bank_name" value="{{ old('bank_name') }}" required></label><label>Tanggal Transfer<input type="date" name="transfer_date" value="{{ old('transfer_date', now()->format('Y-m-d')) }}" required></label><label>Nominal Transfer<input type="number" name="amount" value="{{ old('amount', $order->total_idr) }}" required></label></div>
+        <div class="form-grid"><label>Nomor Invoice<input name="invoice_number" value="{{ old('invoice_number', $order->invoice_number) }}" required><small>Masukkan nomor invoice yang dibayar.</small></label><label>Nama Pengirim<input name="payer_name" value="{{ old('payer_name', $order->customer_name) }}" required></label><label>Bank Pengirim<input name="bank_name" value="{{ old('bank_name') }}" required></label><label>Tanggal Transfer<input type="date" name="transfer_date" value="{{ old('transfer_date', now()->format('Y-m-d')) }}" required></label><label>Nominal Transfer<input type="number" name="amount" value="{{ old('amount', $order->total_idr) }}" required></label></div>
         <label>Upload Bukti Pembayaran<input type="file" name="payment_proof" accept="image/jpeg,image/png,image/webp,application/pdf"></label>
         <small>Format JPG, PNG, WEBP, atau PDF. Maksimal 3 MB.</small>
-        @if($errors->any())<div class="alert error">Mohon periksa kembali data konfirmasi.</div>@endif
+        @if($errors->any())
+            <div class="alert error">
+                <strong>Konfirmasi belum bisa dikirim.</strong>
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <button class="btn btn-gold" type="submit">Kirim Konfirmasi Pembayaran</button>
     </form>
 </section>
