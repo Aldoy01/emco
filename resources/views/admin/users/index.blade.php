@@ -7,7 +7,7 @@
         <p class="crm-kicker">Access control</p>
         <h2>Kelola akun Super Admin, Finance, Pengiriman, dan member pembeli.</h2>
     </div>
-    <a class="btn btn-gold" href="{{ route('admin.users.create') }}">Tambah User Admin</a>
+    <a class="btn btn-gold" href="{{ route('admin.users.create') }}">Tambah User</a>
 </section>
 
 <section class="admin-panel crm-card">

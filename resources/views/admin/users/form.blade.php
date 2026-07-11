@@ -1,11 +1,12 @@
 @extends('layouts.admin')
-@section('title', ($user->exists ? 'Edit User' : 'Tambah User Admin') . ' - CRM EMKO')
-@section('page_title', $user->exists ? 'Edit User' : 'Tambah User Admin')
+@section('title', ($user->exists ? 'Edit User' : 'Tambah User') . ' - CRM EMKO')
+@section('page_title', $user->exists ? 'Edit User' : 'Tambah User')
 @section('content')
+@php($selectedRole = old('account_role', $user->exists ? $user->adminRole() : App\Models\User::ROLE_FINANCE))
 <section class="crm-hero-panel small">
     <div>
-        <p class="crm-kicker">{{ $user->exists ? 'User profile' : 'New admin account' }}</p>
-        <h2>{{ $user->exists ? 'Perbarui akses, role, dan password user.' : 'Buat akun admin untuk finance atau pengiriman.' }}</h2>
+        <p class="crm-kicker">{{ $user->exists ? 'User profile' : 'New account' }}</p>
+        <h2>{{ $user->exists ? 'Perbarui akses, role, dan password user.' : 'Buat akun admin atau member pembeli.' }}</h2>
     </div>
     <a class="btn btn-outline" href="{{ route('admin.users.index') }}">Kembali</a>
 </section>
@@ -24,18 +25,13 @@
             </label>
         </div>
 
-        @if($user->exists)
-            <label class="checkbox-line"><input type="checkbox" name="is_admin" value="1" @checked(old('is_admin', $user->is_admin))> Jadikan akun admin</label>
-        @else
-            <input type="hidden" name="is_admin" value="1">
-        @endif
-
-        <label>Role Admin
-            <select name="admin_role">
-                @foreach($roles as $key => $label)
-                    <option value="{{ $key }}" @selected(old('admin_role', $user->admin_role ?: App\Models\User::ROLE_FINANCE) === $key)>{{ $label }}</option>
+        <label>Role / Akses User
+            <select name="account_role" required>
+                @foreach($roleOptions as $key => $label)
+                    <option value="{{ $key }}" @selected($selectedRole === $key)>{{ $label }}</option>
                 @endforeach
             </select>
+            <small>Member Pembeli hanya bisa masuk dashboard member. Super Admin, Finance, dan Pengiriman masuk area admin sesuai aksesnya.</small>
         </label>
 
         @unless($user->exists)
@@ -50,7 +46,7 @@
         @endunless
 
         @if($errors->any())<div class="alert error">{{ $errors->first() }}</div>@endif
-        <button class="btn btn-gold" type="submit">{{ $user->exists ? 'Simpan User' : 'Buat User Admin' }}</button>
+        <button class="btn btn-gold" type="submit">{{ $user->exists ? 'Simpan User' : 'Buat User' }}</button>
     </form>
 
     @if($user->exists)

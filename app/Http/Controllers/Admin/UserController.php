@@ -42,7 +42,7 @@ class UserController extends Controller
     {
         return view('admin.users.form', [
             'user' => new User(['is_admin' => true, 'admin_role' => User::ROLE_FINANCE]),
-            'roles' => User::adminRoles(),
+            'roleOptions' => $this->roleOptions(),
         ]);
     }
 
@@ -51,27 +51,29 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:160',
             'email' => ['required', 'email', 'max:160', Rule::unique('users', 'email')],
-            'admin_role' => ['required', Rule::in(array_keys(User::adminRoles()))],
+            'account_role' => ['required', Rule::in(array_keys($this->roleOptions()))],
             'password' => ['required', 'confirmed', Password::defaults()],
         ]);
+
+        $isAdmin = $data['account_role'] !== 'member';
 
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'email_verified_at' => now(),
-            'is_admin' => true,
-            'admin_role' => $data['admin_role'],
+            'is_admin' => $isAdmin,
+            'admin_role' => $isAdmin ? $data['account_role'] : null,
         ]);
 
-        return redirect()->route('admin.users.index')->with('success', 'User admin berhasil dibuat.');
+        return redirect()->route('admin.users.index')->with('success', 'User berhasil dibuat.');
     }
 
     public function edit(User $user)
     {
         return view('admin.users.form', [
             'user' => $user,
-            'roles' => User::adminRoles(),
+            'roleOptions' => $this->roleOptions(),
         ]);
     }
 
@@ -80,21 +82,20 @@ class UserController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:160',
             'email' => ['required', 'email', 'max:160', Rule::unique('users', 'email')->ignore($user->id)],
-            'is_admin' => 'nullable|boolean',
-            'admin_role' => ['nullable', Rule::in(array_keys(User::adminRoles()))],
+            'account_role' => ['required', Rule::in(array_keys($this->roleOptions()))],
         ]);
 
-        $isAdmin = $request->boolean('is_admin');
-
-        if ((int) $user->id === (int) $request->user()->id && ! $isAdmin) {
-            return back()->withErrors(['is_admin' => 'Akun yang sedang digunakan tidak bisa diubah menjadi member.'])->withInput();
+        if ((int) $user->id === (int) $request->user()->id && $data['account_role'] !== User::ROLE_SUPER_ADMIN) {
+            return back()->withErrors(['account_role' => 'Akun yang sedang digunakan harus tetap Super Admin agar akses manajemen user tidak terkunci.'])->withInput();
         }
+
+        $isAdmin = $data['account_role'] !== 'member';
 
         $user->update([
             'name' => $data['name'],
             'email' => $data['email'],
             'is_admin' => $isAdmin,
-            'admin_role' => $isAdmin ? ($data['admin_role'] ?? User::ROLE_FINANCE) : null,
+            'admin_role' => $isAdmin ? $data['account_role'] : null,
             'email_verified_at' => $user->email_verified_at ?: now(),
         ]);
 
@@ -112,5 +113,10 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('admin.users.edit', $user)->with('success', 'Password user berhasil direset.');
+    }
+
+    private function roleOptions(): array
+    {
+        return ['member' => 'Member Pembeli'] + User::adminRoles();
     }
 }
