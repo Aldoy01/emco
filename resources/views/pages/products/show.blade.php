@@ -2,7 +2,6 @@
 @section('title',$product->product_name.' - EMKO')
 @section('content')
 @php
-    $hideCommercial = config('emko.hide_commercial_values');
     $productWaText = rawurlencode("Halo Sales EMKO, saya ingin konsultasi produk:\n\nProduk: {$product->product_name}\nHarga estimasi: {$product->formatted_final_price_idr}\nQty:\nNama:\nPerusahaan:\nLokasi proyek:\nKebutuhan teknis:");
     $productWaLink = 'https://wa.me/' . config('emko.sales_whatsapp') . '?text=' . $productWaText;
 @endphp
@@ -10,11 +9,12 @@
     <div>
         <p class="eyebrow">{{ $product->category->name }}</p>
         <h1>{{ $product->product_name }}</h1>
+        <span class="product-status detail-status status-{{ $product->status }}">{{ $product->status_label }}</span>
         <p>{{ $product->short_description }}</p>
-        <div class="hero-actions"><a class="btn btn-gold" href="{{ route('checkout.create',$product) }}">Beli Langsung</a><a class="btn btn-light" href="{{ route('quotation.create',['product'=>$product->id]) }}">Hubungi Sales</a><a class="btn btn-light" href="{{ $productWaLink }}">WhatsApp Sales</a></div>
+        <div class="hero-actions">@if($product->is_purchasable)<a class="btn btn-gold" href="{{ route('checkout.create',$product) }}">Beli Langsung</a>@else<span class="btn btn-outline disabled-action">{{ $product->status === 'by_request' ? 'Pembelian via Sales' : 'Tidak Tersedia' }}</span>@endif<a class="btn btn-light" href="{{ route('quotation.create',['product'=>$product->id]) }}">Hubungi Sales</a><a class="btn btn-light" href="{{ $productWaLink }}">WhatsApp Sales</a></div>
     </div>
     <aside class="product-detail-media has-image"><img src="{{ $product->image ? asset($product->image) : asset('uploads/products/default-catalog.png') }}" alt="{{ $product->product_name }}"></aside>
-    <aside class="quote-box"><span>Harga Diskon</span><strong>{{ $product->formatted_final_price_idr }}</strong><p>Harga Dasar {{ $product->formatted_price_idr }} | Diskon {{ $hideCommercial ? '' : number_format($product->discount_percent,0) . '%' }}</p>@if($product->purchase_information)<p>{{ $product->purchase_information }}</p>@endif<small>{{ $product->price_note }}</small></aside>
+    <aside class="quote-box"><span>Harga Diskon</span><strong>{{ $product->formatted_final_price_idr }}</strong><p>Harga Dasar {{ $product->formatted_price_idr }} | Diskon {{ number_format($product->discount_percent,0) . '%' }}</p><p>Status: <strong class="inline-strong">{{ $product->status_label }}</strong></p>@if($product->purchase_information)<p>{{ $product->purchase_information }}</p>@endif<small>{{ $product->price_note }}</small></aside>
 </section>
 
 <section class="section split top-align"><div><h2>Fitur Utama</h2><ul class="feature-list">@foreach($product->features ?? [] as $feature)<li>{{ $feature }}</li>@endforeach</ul></div><div><h2>Spesifikasi</h2><ul class="spec-list">@foreach($product->specifications ?? [] as $spec)<li>{{ $spec }}</li>@endforeach</ul><a class="btn btn-outline" href="{{ $product->datasheet_file ?: route('downloads') }}">Download Datasheet</a></div></section>
@@ -77,7 +77,11 @@
                                 <td class="{{ optional($item)->id === $product->id ? 'active-column' : '' }}">
                                     @if($item)
                                         <div class="comparison-actions">
-                                            <a class="btn btn-gold" href="{{ route('checkout.create', $item) }}">Beli</a>
+                                            @if($item->is_purchasable)
+                                                <a class="btn btn-gold" href="{{ route('checkout.create', $item) }}">Beli</a>
+                                            @else
+                                                <span class="btn btn-outline disabled-action">{{ $item->status_label }}</span>
+                                            @endif
                                             <a class="btn btn-outline" href="{{ route('quotation.create', ['product' => $item->id]) }}">Hubungi Sales</a>
                                         </div>
                                     @else

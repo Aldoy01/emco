@@ -1,7 +1,7 @@
 @extends('layouts.public')
 @section('title', 'Konfirmasi Pembayaran ' . $order->invoice_number)
 @section('content')
-<section class="page-title"><p class="eyebrow">Payment Confirmation</p><h1>Konfirmasi Pembayaran</h1><p>{{ $order->invoice_number }}{{ config('emko.hide_commercial_values') ? '' : ' · Total ' . $order->formatted_total }}</p></section>
+<section class="page-title"><p class="eyebrow">Payment Confirmation</p><h1>Konfirmasi Pembayaran</h1><p>{{ $order->invoice_number }} - Total {{ $order->formatted_total }}</p></section>
 <section class="section narrow">
     <form class="rfq-form checkout-form" method="post" enctype="multipart/form-data" action="{{ route('checkout.confirm.store', $order) }}">
         @csrf

@@ -1,7 +1,6 @@
 @extends('layouts.public')
 @section('title','Pricelist EMKO Indonesia 2026 - Rupiah')
 @section('content')
-@php($hideCommercial = config('emko.hide_commercial_values'))
 <section class="page-title">
     <p class="eyebrow">Indonesia 2026</p>
     <h1>Pricelist Produk EMKO</h1>
@@ -17,6 +16,7 @@
                     <th>Harga Dasar</th>
                     <th>Disc</th>
                     <th>Harga Diskon</th>
+                    <th>Status</th>
                     <th>Detail</th>
                     <th>Aksi</th>
                 </tr>
@@ -27,12 +27,17 @@
                         <td><strong>{{ $product->product_code }}</strong><br><small>{{ $product->short_description }}</small></td>
                         <td>{{ $product->category->name }}</td>
                         <td>{{ $product->formatted_price_idr }}</td>
-                        <td>{{ $hideCommercial ? '' : number_format($product->discount_percent,0) . '%' }}</td>
+                        <td>{{ number_format($product->discount_percent,0) . '%' }}</td>
                         <td><strong>{{ $product->formatted_final_price_idr }}</strong></td>
+                        <td><span class="product-status status-{{ $product->status }}">{{ $product->status_label }}</span></td>
                         <td><a class="table-action detail" href="{{ route('products.show', $product) }}">Lihat Detail</a></td>
                         <td>
                             <div class="table-actions">
-                                <a class="table-action buy" href="{{ route('checkout.create', $product) }}">Beli</a>
+                                @if($product->is_purchasable)
+                                    <a class="table-action buy" href="{{ route('checkout.create', $product) }}">Beli</a>
+                                @else
+                                    <span class="table-action disabled">{{ $product->status === 'by_request' ? 'Via Sales' : 'Tidak tersedia' }}</span>
+                                @endif
                                 <a class="table-action quote" href="{{ route('quotation.create',['product'=>$product->id]) }}">Hubungi Sales</a>
                             </div>
                         </td>

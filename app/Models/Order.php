@@ -45,37 +45,21 @@ class Order extends Model
 
     public function getFormattedUnitPriceAttribute(): string
     {
-        if (config('emko.hide_commercial_values')) {
-            return '';
-        }
-
         return 'Rp ' . number_format($this->unit_price_idr, 0, ',', '.');
     }
 
     public function getFormattedSubtotalAttribute(): string
     {
-        if (config('emko.hide_commercial_values')) {
-            return '';
-        }
-
         return 'Rp ' . number_format($this->subtotal_idr, 0, ',', '.');
     }
 
     public function getFormattedShippingCostAttribute(): string
     {
-        if (config('emko.hide_commercial_values')) {
-            return '';
-        }
-
         return 'Rp ' . number_format($this->shipping_cost_idr, 0, ',', '.');
     }
 
     public function getFormattedTotalAttribute(): string
     {
-        if (config('emko.hide_commercial_values')) {
-            return '';
-        }
-
         return 'Rp ' . number_format($this->total_idr, 0, ',', '.');
     }
 }

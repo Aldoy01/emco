@@ -19,6 +19,8 @@ class CheckoutController extends Controller
 {
     public function create(Request $request, Product $product)
     {
+        abort_unless($product->is_purchasable, 404);
+
         $quantity = max(1, min(999, (int) $request->query('qty', 1)));
 
         return view('pages.checkout.create', [
@@ -50,6 +52,8 @@ class CheckoutController extends Controller
 
     public function store(Request $request, Product $product)
     {
+        abort_unless($product->is_purchasable, 404);
+
         $rules = [
             'customer_name' => 'required|string|max:160',
             'company' => 'nullable|string|max:160',
