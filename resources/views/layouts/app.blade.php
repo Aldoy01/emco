@@ -457,7 +457,7 @@
                 </form>
                 <div class="mt-4" style="font-size:0.82rem;">
                     <p class="mb-1"><i class="bi bi-geo-alt me-2" style="color:var(--accent)"></i>Indonesia</p>
-                    <p class="mb-1"><i class="bi bi-telephone me-2" style="color:var(--accent)"></i>{{ config('emko.sales_whatsapp') === '6281292718681' ? '081292718681' : config('emko.sales_whatsapp') }}</p>
+                    <p class="mb-1"><i class="bi bi-telephone me-2" style="color:var(--accent)"></i>{{ config('emko.sales_whatsapp') }}</p>
                     <p><i class="bi bi-envelope me-2" style="color:var(--accent)"></i>{{ config('emko.sales_email') }}</p>
                 </div>
             </div>

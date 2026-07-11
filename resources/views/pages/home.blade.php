@@ -61,6 +61,6 @@
 
 <section class="section split home-cta-section">
     <div><p class="eyebrow">{{ $homeContent['cta_eyebrow'] }}</p><h2>{{ $homeContent['cta_title'] }}</h2><p>{{ $homeContent['cta_text'] }}</p></div>
-    <div class="home-cta-card"><strong>Sales EMKO</strong><p>Email: <a href="mailto:{{ config('emko.sales_email') }}">{{ config('emko.sales_email') }}</a></p><p>WhatsApp: 081292718681</p><div class="hero-actions"><a class="btn btn-gold" href="{{ route('quotation.create') }}">Hubungi Sales</a><a class="btn btn-outline" href="{{ route('contact') }}">Kontak</a></div></div>
+    <div class="home-cta-card"><strong>Sales EMKO</strong><p>Email: <a href="mailto:{{ config('emko.sales_email') }}">{{ config('emko.sales_email') }}</a></p><p>WhatsApp: {{ config('emko.sales_whatsapp') }}</p><div class="hero-actions"><a class="btn btn-gold" href="{{ route('quotation.create') }}">Hubungi Sales</a><a class="btn btn-outline" href="{{ route('contact') }}">Kontak</a></div></div>
 </section>
 @endsection

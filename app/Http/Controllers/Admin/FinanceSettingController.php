@@ -52,7 +52,7 @@ class FinanceSettingController extends Controller
             'transfer_note' => 'Gunakan nomor invoice sebagai berita transfer agar pembayaran mudah diverifikasi.',
             'finance_name' => 'Finance EMKO Indonesia',
             'finance_email' => 'finance@emkoindonesia.com',
-            'finance_phone' => '081292718681',
+            'finance_phone' => '6285188337500',
             'finance_information' => 'Tim finance akan memverifikasi pembayaran setelah bukti transfer dikirim melalui halaman konfirmasi pembayaran.',
         ];
     }

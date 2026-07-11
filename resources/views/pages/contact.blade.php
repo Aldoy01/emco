@@ -14,7 +14,7 @@
     <div>
         <h2>Channel Sales</h2>
         <p>Email: <a href="mailto:{{ config('emko.sales_email') }}">{{ config('emko.sales_email') }}</a></p>
-        <p>WhatsApp: <a href="{{ $contactWaLink }}">081292718681</a></p>
+        <p>WhatsApp: <a href="{{ $contactWaLink }}">{{ config('emko.sales_whatsapp') }}</a></p>
         <p>Area layanan: Indonesia</p>
     </div>
     <div class="quote-box">

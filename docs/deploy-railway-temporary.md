@@ -51,7 +51,7 @@ SESSION_LIFETIME=120
 
 USD_TO_IDR_RATE=16000
 SALES_EMAIL=aldiansyah@tramatek.id
-SALES_WHATSAPP=6281292718681
+SALES_WHATSAPP=6285188337500
 ```
 
 Railway/Railpack saat ini bisa gagal jika `composer.json` meminta PHP `8.0.2`.

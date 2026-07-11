@@ -138,7 +138,7 @@ MAIL_PORT=465
 
 USD_TO_IDR_RATE=16000
 SALES_EMAIL=aldiansyah@tramatek.id
-SALES_WHATSAPP=6281292718681
+SALES_WHATSAPP=6285188337500
 ```
 
 Jika `APP_KEY` masih kosong:
@@ -234,7 +234,7 @@ Cek fitur:
 - Konfirmasi pembayaran.
 - Admin melihat konfirmasi pembayaran di `Admin > Pembelian & Pembayaran`.
 - Email invoice atau notifikasi terkirim.
-- Tombol WhatsApp mengarah ke nomor `081292718681`.
+- Tombol WhatsApp mengarah ke nomor `6285188337500`.
 
 ## 10. Update Deploy Berikutnya
 
