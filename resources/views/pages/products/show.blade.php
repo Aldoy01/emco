@@ -20,7 +20,6 @@
             <span class="product-status status-{{ $product->status }}">{{ $product->status_label }}</span>
         </div>
         <div class="price-card-main">
-            <span class="price-label">Harga Diskon</span>
             <strong class="price-value">{{ $product->formatted_final_price_idr }}</strong>
             <div class="price-line"><span>Harga dasar</span><del>{{ $product->formatted_price_idr }}</del></div>
             <div class="price-line"><span>Diskon</span><strong>{{ number_format($product->discount_percent,0) }}%</strong></div>
@@ -33,7 +32,7 @@
         @endif
         <div class="price-card-actions">
             @if($product->is_purchasable)
-                <a class="btn btn-gold price-buy" href="{{ route('checkout.create',$product) }}">Beli Sekarang</a>
+                <a class="btn btn-gold price-buy" href="{{ route('checkout.create',$product) }}">Beli Langsung</a>
             @else
                 <span class="btn btn-outline disabled-action price-buy">{{ $product->status === 'by_request' ? 'Beli via Sales' : 'Tidak Tersedia' }}</span>
             @endif
