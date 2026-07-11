@@ -19,7 +19,11 @@
                     <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Produk</td><td style="border-bottom:1px solid #e5eaf2;"><strong>{{ $order->product->product_name }}</strong></td></tr>
                     <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Qty</td><td style="border-bottom:1px solid #e5eaf2;">{{ $order->quantity }}</td></tr>
                     <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Harga Unit</td><td style="border-bottom:1px solid #e5eaf2;">{{ $order->formatted_unit_price }}</td></tr>
-                    <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Subtotal</td><td style="border-bottom:1px solid #e5eaf2;">{{ $order->formatted_subtotal }}</td></tr>
+                    <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Subtotal Harga Dasar</td><td style="border-bottom:1px solid #e5eaf2;">{{ $order->formatted_original_subtotal }}</td></tr>
+                    <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Diskon Produk</td><td style="border-bottom:1px solid #e5eaf2;">- {{ $order->formatted_discount }}</td></tr>
+                    <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Subtotal Setelah Diskon</td><td style="border-bottom:1px solid #e5eaf2;">{{ $order->formatted_subtotal }}</td></tr>
+                    <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">{{ $order->tax_label }}</td><td style="border-bottom:1px solid #e5eaf2;">{{ $order->formatted_tax }}</td></tr>
+                    <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Biaya Pengiriman</td><td style="border-bottom:1px solid #e5eaf2;">{{ $order->formatted_shipping_cost }}</td></tr>
                     <tr><td style="border-bottom:1px solid #e5eaf2;color:#667085;">Total Invoice</td><td style="border-bottom:1px solid #e5eaf2;"><strong>{{ $order->formatted_total }}</strong></td></tr>
                 </table>
 

@@ -92,8 +92,14 @@ class CheckoutController extends Controller
 
         $quantity = (int) $data['quantity'];
         $unitPrice = $product->final_price_idr;
+        $originalUnitPrice = $product->price_idr;
         $subtotal = $unitPrice * $quantity;
+        $originalSubtotal = $originalUnitPrice * $quantity;
+        $discount = max(0, $originalSubtotal - $subtotal);
+        $taxPercent = (float) config('emko.invoice_tax_percent', 11);
+        $taxAmount = (int) round($subtotal * ($taxPercent / 100));
         $shippingCost = 0;
+        $total = $subtotal + $taxAmount + $shippingCost;
         $address = trim($data['shipping_address'] . "\n" . $data['city'] . ', ' . $data['province'] . ($data['postal_code'] ? ' ' . $data['postal_code'] : '') . "\n" . $data['country']);
 
         $order = Order::create([
@@ -108,8 +114,12 @@ class CheckoutController extends Controller
             'quantity' => $quantity,
             'unit_price_idr' => $unitPrice,
             'subtotal_idr' => $subtotal,
+            'original_subtotal_idr' => $originalSubtotal,
+            'discount_idr' => $discount,
+            'tax_percent' => $taxPercent,
+            'tax_idr' => $taxAmount,
             'shipping_cost_idr' => $shippingCost,
-            'total_idr' => $subtotal + $shippingCost,
+            'total_idr' => $total,
             'payment_method' => 'bank_transfer',
             'status' => 'pending_payment',
             'notes' => $data['notes'] ?? null,

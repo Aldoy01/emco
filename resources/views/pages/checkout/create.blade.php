@@ -9,6 +9,11 @@
     $lineTotal = $product->final_price_idr * (int) $qty;
     $originalTotal = $product->price_idr * (int) $qty;
     $saving = max(0, $originalTotal - $lineTotal);
+    $taxPercent = (float) config('emko.invoice_tax_percent', 11);
+    $taxAmount = (int) round($lineTotal * ($taxPercent / 100));
+    $shippingCost = 0;
+    $grandTotal = $lineTotal + $taxAmount + $shippingCost;
+    $taxLabel = 'PPN ' . rtrim(rtrim(number_format($taxPercent, 2, ',', '.'), '0'), ',') . '%';
     $regions = [
         'DKI Jakarta' => ['Jakarta Pusat','Jakarta Utara','Jakarta Barat','Jakarta Selatan','Jakarta Timur','Kepulauan Seribu'],
         'Banten' => ['Tangerang','Tangerang Selatan','Serang','Cilegon','Pandeglang','Lebak'],
@@ -45,10 +50,13 @@
         <div class="review-head"><strong>Deskripsi</strong><strong>Harga</strong></div>
         <div class="review-row product-line"><div><strong>{{ $product->product_name }}</strong><span>{{ $product->short_description }}</span></div><div><strong>{{ $product->formatted_final_price_idr }}</strong><span>Per unit</span></div></div>
         <div class="review-row"><div>Quantity pembelian</div><div><strong>{{ $qty . ' unit' }}</strong></div></div>
-        <div class="review-row subtotal-line"><div>Subtotal</div><div>{{ 'Rp ' . number_format($lineTotal, 0, ',', '.') }}</div></div>
-        <div class="review-row discount-line"><div>{{ 'Hemat promo ' . number_format($product->discount_percent, 0) . '%' }}</div><div><del>{{ 'Rp ' . number_format($saving, 0, ',', '.') }}</del></div></div>
-        <div class="review-total"><span>Total yang dibayar sekarang:</span><strong>{{ 'Rp ' . number_format($lineTotal, 0, ',', '.') }}</strong></div>
-        <div class="review-note"><span>Tagihan berikutnya:</span><strong>Menunggu validasi pajak, shipping, instalasi, dan konfigurasi proyek.</strong></div>
+        <div class="review-row subtotal-line"><div>Subtotal harga dasar</div><div>{{ 'Rp ' . number_format($originalTotal, 0, ',', '.') }}</div></div>
+        <div class="review-row discount-line"><div>{{ 'Diskon promo ' . number_format($product->discount_percent, 0) . '%' }}</div><div>- {{ 'Rp ' . number_format($saving, 0, ',', '.') }}</div></div>
+        <div class="review-row"><div>Subtotal setelah diskon</div><div>{{ 'Rp ' . number_format($lineTotal, 0, ',', '.') }}</div></div>
+        <div class="review-row"><div>{{ $taxLabel }}</div><div>{{ 'Rp ' . number_format($taxAmount, 0, ',', '.') }}</div></div>
+        <div class="review-row"><div>Biaya pengiriman</div><div>{{ 'Rp ' . number_format($shippingCost, 0, ',', '.') }}</div></div>
+        <div class="review-total"><span>Total yang dibayar sekarang:</span><strong>{{ 'Rp ' . number_format($grandTotal, 0, ',', '.') }}</strong></div>
+        <div class="review-note"><span>Catatan:</span><strong>Instalasi, konfigurasi, dan biaya proyek tambahan akan dikonfirmasi oleh sales bila diperlukan.</strong></div>
     </div>
 
     <section class="checkout-account-card">
@@ -91,7 +99,7 @@
                 </div>
             </div>
             @if($errors->any() && ! $errors->has('login_email'))<div class="alert error">Mohon periksa kembali data checkout.</div>@endif
-            <div class="checkout-paybar"><span>Total yang dibayar sekarang:</span><strong>{{ 'Rp ' . number_format($lineTotal, 0, ',', '.') }}</strong><button class="btn btn-gold" type="submit">Selesaikan Pemesanan</button></div>
+            <div class="checkout-paybar"><span>Total yang dibayar sekarang:</span><strong>{{ 'Rp ' . number_format($grandTotal, 0, ',', '.') }}</strong><button class="btn btn-gold" type="submit">Selesaikan Pemesanan</button></div>
         </form>
     </section>
 </div></section>

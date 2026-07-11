@@ -18,6 +18,7 @@
             <div><span>Customer</span><strong>{{ $order->customer_name }}</strong><p>{{ $order->company ?: '-' }}<br>{{ $order->email }}<br>{{ $order->phone }}</p></div>
             <div><span>Alamat Pengiriman</span><p>{!! nl2br(e($order->shipping_address)) !!}</p></div>
             <div><span>Produk</span><strong>{{ $order->product->product_name }}</strong><p>{{ $hideCommercial ? '' : $order->quantity }} {{ $hideCommercial ? '' : '×' }} {{ $order->formatted_unit_price }}</p></div>
+            <div><span>Komposisi Invoice</span><p>Subtotal: {{ $order->formatted_subtotal }}<br>Diskon: {{ $order->formatted_discount }}<br>{{ $order->tax_label }}: {{ $order->formatted_tax }}<br>Pengiriman: {{ $order->formatted_shipping_cost }}</p></div>
             <div><span>Total Invoice</span><strong class="order-total">{{ $order->formatted_total }}</strong><p>Dibuat {{ $order->created_at->format('d M Y H:i') }}</p></div>
         </div>
 

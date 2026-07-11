@@ -22,11 +22,15 @@ class Order extends Model
 
     protected $fillable = [
         'user_id', 'product_id', 'invoice_number', 'customer_name', 'company', 'email', 'phone',
-        'shipping_address', 'quantity', 'unit_price_idr', 'subtotal_idr', 'shipping_cost_idr',
-        'total_idr', 'payment_method', 'status', 'notes', 'payment_proof', 'paid_at'
+        'shipping_address', 'quantity', 'unit_price_idr', 'subtotal_idr', 'original_subtotal_idr',
+        'discount_idr', 'tax_percent', 'tax_idr', 'shipping_cost_idr', 'total_idr', 'payment_method',
+        'status', 'notes', 'payment_proof', 'paid_at'
     ];
 
-    protected $casts = ['paid_at' => 'datetime'];
+    protected $casts = [
+        'paid_at' => 'datetime',
+        'tax_percent' => 'float',
+    ];
 
     public function getRouteKeyName(): string
     {
@@ -45,21 +49,46 @@ class Order extends Model
 
     public function getFormattedUnitPriceAttribute(): string
     {
-        return 'Rp ' . number_format($this->unit_price_idr, 0, ',', '.');
+        return $this->rupiah($this->unit_price_idr);
+    }
+
+    public function getFormattedOriginalSubtotalAttribute(): string
+    {
+        return $this->rupiah($this->original_subtotal_idr ?: $this->subtotal_idr);
+    }
+
+    public function getFormattedDiscountAttribute(): string
+    {
+        return $this->rupiah($this->discount_idr);
     }
 
     public function getFormattedSubtotalAttribute(): string
     {
-        return 'Rp ' . number_format($this->subtotal_idr, 0, ',', '.');
+        return $this->rupiah($this->subtotal_idr);
+    }
+
+    public function getTaxLabelAttribute(): string
+    {
+        return 'PPN ' . rtrim(rtrim(number_format($this->tax_percent, 2, ',', '.'), '0'), ',') . '%';
+    }
+
+    public function getFormattedTaxAttribute(): string
+    {
+        return $this->rupiah($this->tax_idr);
     }
 
     public function getFormattedShippingCostAttribute(): string
     {
-        return 'Rp ' . number_format($this->shipping_cost_idr, 0, ',', '.');
+        return $this->rupiah($this->shipping_cost_idr);
     }
 
     public function getFormattedTotalAttribute(): string
     {
-        return 'Rp ' . number_format($this->total_idr, 0, ',', '.');
+        return $this->rupiah($this->total_idr);
+    }
+
+    private function rupiah(int|float|null $amount): string
+    {
+        return 'Rp ' . number_format((float) ($amount ?? 0), 0, ',', '.');
     }
 }
