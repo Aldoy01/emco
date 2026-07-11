@@ -14,7 +14,32 @@
         <div class="hero-actions">@if($product->is_purchasable)<a class="btn btn-gold" href="{{ route('checkout.create',$product) }}">Beli Langsung</a>@else<span class="btn btn-outline disabled-action">{{ $product->status === 'by_request' ? 'Pembelian via Sales' : 'Tidak Tersedia' }}</span>@endif<a class="btn btn-light" href="{{ route('quotation.create',['product'=>$product->id]) }}">Hubungi Sales</a><a class="btn btn-light" href="{{ $productWaLink }}">WhatsApp Sales</a></div>
     </div>
     <aside class="product-detail-media has-image"><img src="{{ $product->image ? asset($product->image) : asset('uploads/products/default-catalog.png') }}" alt="{{ $product->product_name }}"></aside>
-    <aside class="quote-box"><span>Harga Diskon</span><strong>{{ $product->formatted_final_price_idr }}</strong><p>Harga Dasar {{ $product->formatted_price_idr }} | Diskon {{ number_format($product->discount_percent,0) . '%' }}</p><p>Status: <strong class="inline-strong">{{ $product->status_label }}</strong></p>@if($product->purchase_information)<p>{{ $product->purchase_information }}</p>@endif<small>{{ $product->price_note }}</small></aside>
+    <aside class="quote-box price-card-modern">
+        <div class="price-card-top">
+            <span class="price-card-kicker">Harga Promo</span>
+            <span class="product-status status-{{ $product->status }}">{{ $product->status_label }}</span>
+        </div>
+        <div class="price-card-main">
+            <span class="price-label">Harga Diskon</span>
+            <strong class="price-value">{{ $product->formatted_final_price_idr }}</strong>
+            <div class="price-line"><span>Harga dasar</span><del>{{ $product->formatted_price_idr }}</del></div>
+            <div class="price-line"><span>Diskon</span><strong>{{ number_format($product->discount_percent,0) }}%</strong></div>
+        </div>
+        @if($product->purchase_information)
+            <p class="purchase-info">{{ $product->purchase_information }}</p>
+        @endif
+        @if($product->price_note)
+            <small class="price-note">{{ $product->price_note }}</small>
+        @endif
+        <div class="price-card-actions">
+            @if($product->is_purchasable)
+                <a class="btn btn-gold price-buy" href="{{ route('checkout.create',$product) }}">Beli Sekarang</a>
+            @else
+                <span class="btn btn-outline disabled-action price-buy">{{ $product->status === 'by_request' ? 'Beli via Sales' : 'Tidak Tersedia' }}</span>
+            @endif
+            <a class="btn btn-outline price-sales" href="{{ route('quotation.create',['product'=>$product->id]) }}">Sales</a>
+        </div>
+    </aside>
 </section>
 
 <section class="section split top-align"><div><h2>Fitur Utama</h2><ul class="feature-list">@foreach($product->features ?? [] as $feature)<li>{{ $feature }}</li>@endforeach</ul></div><div><h2>Spesifikasi</h2><ul class="spec-list">@foreach($product->specifications ?? [] as $spec)<li>{{ $spec }}</li>@endforeach</ul><a class="btn btn-outline" href="{{ $product->datasheet_file ?: route('downloads') }}">Download Datasheet</a></div></section>
