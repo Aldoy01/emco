@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>@yield('title','EMKO Gencontrol Indonesia')</title>
-    <link rel="stylesheet" href="{{ asset('css/emko.css') }}?v={{ filemtime(base_path('css/emko.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/emko.css') }}?v={{ filemtime(public_path('css/emko.css')) }}">
     @stack('styles')
 </head>
 <body class="public-shell">

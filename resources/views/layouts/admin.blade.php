@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>@yield('title', 'Admin EMKO CRM')</title>
-    <link rel="stylesheet" href="{{ asset('css/emko.css') }}?v={{ filemtime(base_path('css/emko.css')) }}">
-    <link rel="stylesheet" href="{{ asset('css/admin-orders.css') }}?v={{ filemtime(base_path('css/admin-orders.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/emko.css') }}?v={{ filemtime(public_path('css/emko.css')) }}">
+    <link rel="stylesheet" href="{{ asset('css/admin-orders.css') }}?v={{ filemtime(public_path('css/admin-orders.css')) }}">
 </head>
 <body class="admin-body crm-shell">
     <aside class="admin-sidebar crm-sidebar">
