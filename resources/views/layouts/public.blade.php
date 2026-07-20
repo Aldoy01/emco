@@ -15,7 +15,7 @@
 
     <header class="site-header modern-header">
         <a class="brand modern-brand brand-logo-link" href="{{ route('home') }}" aria-label="EMKO Partnership by Tramatekid">
-            <img class="site-logo" src="{{ asset('images/emko-partnership.png') }}" alt="EMKO Partnership by Tramatekid">
+            <img class="site-logo" src="{{ asset('images/emko-partnership-tramatekid.png') }}" alt="EMKO Partnership by Tramatekid">
         </a>
         <nav class="nav modern-nav">
             <a class="{{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
@@ -60,7 +60,7 @@
         <div class="footer-main">
             <div class="footer-brand-block">
                 <a class="brand modern-brand footer-brand brand-logo-link" href="{{ route('home') }}" aria-label="EMKO Partnership by Tramatekid">
-                    <img class="site-logo footer-logo" src="{{ asset('images/emko-partnership.png') }}" alt="EMKO Partnership by Tramatekid">
+                    <img class="site-logo footer-logo" src="{{ asset('images/emko-partnership-tramatekid.png') }}" alt="EMKO Partnership by Tramatekid">
                 </a>
                 <p>Katalog B2B dan sistem pembelian/quotation untuk generator controller, ATS, synchronizing, monitoring, dan battery charger.</p>
                 <div class="footer-badges"><span>Sales Ready</span><span>Invoice Flow</span><span>Rupiah Price</span></div>

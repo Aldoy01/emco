@@ -10,7 +10,7 @@
 <body class="admin-body crm-shell">
     <aside class="admin-sidebar crm-sidebar">
         <a class="brand crm-brand crm-logo-link" href="{{ route('admin.dashboard') }}" aria-label="EMKO Partnership by Tramatekid">
-            <img class="crm-logo" src="{{ asset('images/emko-partnership.png') }}" alt="EMKO Partnership by Tramatekid">
+            <img class="crm-logo" src="{{ asset('images/emko-partnership-tramatekid.png') }}" alt="EMKO Partnership by Tramatekid">
             <small>Sales CRM</small>
         </a>
         @php($adminUser = auth()->user())

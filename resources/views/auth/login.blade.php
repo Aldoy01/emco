@@ -13,7 +13,7 @@
 <body>
     <div class="login-wrap">
         <div class="login-brand">
-            <img class="login-logo" src="{{ asset('images/emko-partnership.png') }}" alt="EMKO Partnership by Tramatekid">
+            <img class="login-logo" src="{{ asset('images/emko-partnership-tramatekid.png') }}" alt="EMKO Partnership by Tramatekid">
         </div>
         <div class="login-card">
             <h1>Masuk Akun</h1>
