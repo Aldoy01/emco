@@ -29,7 +29,7 @@
                 </div>
                 <strong>{{ $category->name }}</strong>
                 <p>{{ $category->description }}</p>
-                <span class="category-link">Lihat kategori</span>
+                <span class="category-link category-cta"><i></i><span>Lihat Produk</span></span>
             </a>
         @endforeach
     </div>
