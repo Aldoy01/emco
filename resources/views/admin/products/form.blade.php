@@ -36,7 +36,7 @@
                 @if($product->image)
                     <img src="{{ asset($product->image) }}" alt="{{ $product->product_name }}">
                 @else
-                    <span>{{ strtoupper(substr($product->product_name ?: 'EMKO', 0, 2)) }}</span>
+                    <span class="product-placeholder-icon" aria-hidden="true"></span>
                 @endif
             </div>
             <label>Upload Gambar Produk

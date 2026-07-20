@@ -24,7 +24,7 @@
         @foreach($categories as $category)
             <a class="category-tile home-category-card" href="{{ route('categories.show',$category) }}">
                 <div class="category-card-top">
-                    <span class="category-mark">{{ strtoupper(substr($category->name, 0, 2)) }}</span>
+                    <span class="category-mark" aria-hidden="true"><i></i></span>
                     <span class="category-count">{{ $category->products_count }} Produk</span>
                 </div>
                 <strong>{{ $category->name }}</strong>
