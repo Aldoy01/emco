@@ -11,7 +11,7 @@
         <h1>{{ $product->product_name }}</h1>
         <span class="product-status detail-status status-{{ $product->status }}">{{ $product->status_label }}</span>
         <p>{{ $product->short_description }}</p>
-        <div class="hero-actions">@if($product->is_purchasable)<a class="btn btn-gold" href="{{ route('checkout.create',$product) }}">Beli Langsung</a>@else<span class="btn btn-outline disabled-action">{{ $product->status === 'by_request' ? 'Pembelian via Sales' : 'Tidak Tersedia' }}</span>@endif<a class="btn btn-light" href="{{ route('quotation.create',['product'=>$product->id]) }}">Hubungi Sales</a><a class="btn btn-light" href="{{ $productWaLink }}">WhatsApp Sales</a></div>
+        <div class="hero-actions">@if($product->is_purchasable)<a class="btn btn-gold" href="{{ route('checkout.create',$product) }}">Order</a>@else<span class="btn btn-outline disabled-action">{{ $product->status === 'by_request' ? 'Pembelian via Sales' : 'Tidak Tersedia' }}</span>@endif<a class="btn btn-light" href="{{ route('quotation.create',['product'=>$product->id]) }}">Hubungi Sales</a><a class="btn btn-light" href="{{ $productWaLink }}">WhatsApp Sales</a></div>
     </div>
     <aside class="product-detail-media has-image"><img src="{{ $product->image ? asset($product->image) : asset('uploads/products/default-catalog.png') }}" alt="{{ $product->product_name }}"></aside>
     <aside class="quote-box price-card-modern">
@@ -32,7 +32,7 @@
         @endif
         <div class="price-card-actions">
             @if($product->is_purchasable)
-                <a class="btn btn-gold price-buy" href="{{ route('checkout.create',$product) }}">Beli Langsung</a>
+                <a class="btn btn-gold price-buy" href="{{ route('checkout.create',$product) }}">Order</a>
             @else
                 <span class="btn btn-outline disabled-action price-buy">{{ $product->status === 'by_request' ? 'Beli via Sales' : 'Tidak Tersedia' }}</span>
             @endif
