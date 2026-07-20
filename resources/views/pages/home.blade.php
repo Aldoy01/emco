@@ -14,7 +14,7 @@
     <div class="hero-panel home-hero-panel">
         <span>{{ $homeContent['quick_title'] }}</span>
         <ol>@foreach($homeContent['quick_items'] ?? [] as $item)<li>{{ $item }}</li>@endforeach</ol>
-        <a class="btn btn-outline" href="{{ route('pricelist') }}">Buka Pricelist</a>
+        <a class="btn btn-outline" href="{{ route('products.index') }}">Lihat Produk</a>
     </div>
 </section>
 
@@ -36,7 +36,7 @@
 </section>
 
 <section class="section muted home-featured">
-    <div class="section-head"><div><p class="eyebrow">Featured Products</p><h2>Produk Unggulan</h2></div><a href="{{ route('pricelist') }}">Lihat pricelist</a></div>
+    <div class="section-head"><div><p class="eyebrow">Featured Products</p><h2>Produk Unggulan</h2></div><a href="{{ route('products.index') }}">Lihat semua produk</a></div>
     <div class="product-grid">@foreach($featuredProducts as $product) @include('components.product-card',['product'=>$product,'showPrice'=>true]) @endforeach</div>
 </section>
 

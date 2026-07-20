@@ -20,7 +20,7 @@
         <nav class="nav modern-nav">
             <a class="{{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Home</a>
             <a class="{{ request()->routeIs('products.*') || request()->routeIs('categories.*') ? 'active' : '' }}" href="{{ route('products.index') }}">Produk</a>
-            <a class="{{ request()->routeIs('pricelist') ? 'active' : '' }}" href="{{ route('pricelist') }}">Pricelist</a>
+
             <a class="{{ request()->routeIs('downloads') ? 'active' : '' }}" href="{{ route('downloads') }}">Download</a>
             <a class="{{ request()->routeIs('solutions') ? 'active' : '' }}" href="{{ route('solutions') }}">Solusi</a>
             <a class="{{ request()->routeIs('articles') ? 'active' : '' }}" href="{{ route('articles') }}">Artikel</a>
@@ -68,7 +68,7 @@
             <div class="footer-col">
                 <strong>Produk</strong>
                 <a href="{{ route('products.index') }}">Katalog Produk</a>
-                <a href="{{ route('pricelist') }}">Pricelist Rupiah</a>
+
                 <a href="{{ route('downloads') }}">Download Catalogue</a>
             </div>
             <div class="footer-col">

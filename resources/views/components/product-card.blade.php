@@ -21,7 +21,7 @@
         </div>
         <div class="card-actions catalog-actions">
             @if($product->is_purchasable)
-                <a class="catalog-action catalog-buy" href="{{ route('products.show',$product) }}"><span>Beli</span></a>
+                <a class="catalog-action catalog-buy" href="{{ route('products.show',$product) }}"><span>Beli Langsung</span></a>
             @else
                 <span class="catalog-action catalog-disabled"><span>{{ $product->status === 'by_request' ? 'Request' : 'Tidak tersedia' }}</span></span>
             @endif
