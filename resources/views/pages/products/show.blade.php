@@ -122,5 +122,5 @@
 </section>
 @endif
 
-@if($related->count())<section class="section muted"><div class="section-head"><h2>Produk Terkait</h2></div><div class="product-grid">@foreach($related as $item) @include('components.product-card',['product'=>$item]) @endforeach</div></section>@endif
+@if($related->count())<section class="section muted related-products-section"><div class="section-head"><h2>Produk Terkait</h2></div><div class="product-grid catalog-product-grid related-product-grid">@foreach($related as $item) @include('components.product-card',['product'=>$item]) @endforeach</div></section>@endif
 @endsection
