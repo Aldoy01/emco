@@ -140,7 +140,9 @@ class PageController extends Controller
 
     public function contact()
     {
-        return view('pages.contact');
+        return view('pages.contact', [
+            'contactProduct' => Product::orderBy('product_name')->first(),
+        ]);
     }
 
     private function comparisonGroups(): array
