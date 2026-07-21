@@ -2,26 +2,60 @@
 @section('title','Kontak Sales EMKO Indonesia')
 @section('content')
 @php
+    $officeAddress = config('emko.office_address');
+    $officeEmail = config('emko.office_email');
+    $officePhone = config('emko.office_phone');
+    $workEmail = config('emko.work_email');
+    $workPhone = config('emko.work_phone');
     $contactWaText = rawurlencode("Halo Sales EMKO, saya ingin konsultasi kebutuhan produk.\n\nNama:\nPerusahaan:\nProduk yang dibutuhkan:\nQty:\nLokasi proyek:");
-    $contactWaLink = 'https://wa.me/' . config('emko.sales_whatsapp') . '?text=' . $contactWaText;
+    $officeWaLink = 'https://wa.me/' . preg_replace('/\D+/', '', $officePhone) . '?text=' . $contactWaText;
+    $workWaLink = 'https://wa.me/' . preg_replace('/\D+/', '', $workPhone) . '?text=' . $contactWaText;
 @endphp
-<section class="page-title">
-    <p class="eyebrow">Sales Channel</p>
-    <h1>Kontak EMKO / Gencontrol Indonesia</h1>
-    <p>Hubungi sales untuk konsultasi produk, quotation, shipping, availability, dan kebutuhan proyek.</p>
+<section class="page-title contact-title">
+    <p class="eyebrow">Contact Center</p>
+    <h1>Hubungi EMKO Indonesia</h1>
+    <p>Konsultasi produk, quotation, availability, shipping, dan kebutuhan konfigurasi proyek melalui channel resmi kami.</p>
 </section>
-<section class="section split">
-    <div>
-        <h2>Channel Sales</h2>
-        <p>Email: <a href="mailto:{{ config('emko.sales_email') }}">{{ config('emko.sales_email') }}</a></p>
-        <p>WhatsApp: <a href="{{ $contactWaLink }}">{{ config('emko.sales_whatsapp') }}</a></p>
-        <p>Area layanan: Indonesia</p>
-    </div>
-    <div class="quote-box">
-        <span>Butuh AMF, ATS, atau Synchronizing?</span>
-        <strong>Kami bantu pilihkan</strong>
-        <a class="btn btn-gold" href="{{ route('quotation.create') }}">Hubungi Sales</a>
-        <a class="btn btn-outline" href="{{ $contactWaLink }}">WhatsApp Sales</a>
+
+<section class="section contact-section">
+    <div class="contact-layout">
+        <div class="contact-copy">
+            <p class="eyebrow">Office & Work Office</p>
+            <h2>Kontak resmi untuk kebutuhan produk dan penawaran</h2>
+            <p>Alamat office dan work office menggunakan lokasi yang sama. Untuk komunikasi, gunakan email dan nomor kontak sesuai kebutuhan administrasi atau sales.</p>
+            <div class="contact-actions">
+                <a class="btn btn-gold" href="{{ route('quotation.create') }}">Minta Penawaran</a>
+                <a class="btn btn-outline" href="{{ $workWaLink }}">WhatsApp Sales</a>
+            </div>
+        </div>
+
+        <div class="contact-card-grid">
+            <article class="contact-info-card primary">
+                <div class="contact-icon" aria-hidden="true"><span></span></div>
+                <div>
+                    <p>Office</p>
+                    <h3>Office Address</h3>
+                    <address>{{ $officeAddress }}</address>
+                </div>
+                <ul>
+                    <li><span>Email</span><a href="mailto:{{ $officeEmail }}">{{ $officeEmail }}</a></li>
+                    <li><span>Nomor Kontak</span><a href="{{ $officeWaLink }}">{{ $officePhone }}</a></li>
+                </ul>
+            </article>
+
+            <article class="contact-info-card">
+                <div class="contact-icon work" aria-hidden="true"><span></span></div>
+                <div>
+                    <p>Work Office</p>
+                    <h3>Work Office Address</h3>
+                    <address>{{ $officeAddress }}</address>
+                </div>
+                <ul>
+                    <li><span>Email</span><a href="mailto:{{ $workEmail }}">{{ $workEmail }}</a></li>
+                    <li><span>Nomor Kontak</span><a href="{{ $workWaLink }}">{{ $workPhone }}</a></li>
+                </ul>
+            </article>
+        </div>
     </div>
 </section>
 @endsection
