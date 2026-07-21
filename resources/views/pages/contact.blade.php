@@ -20,9 +20,9 @@
             <h1>Alamat kami</h1>
             <p>Konsultasi cepat untuk kebutuhan generator controller, ATS, synchronizing, dan dukungan instalasi. Tim kami bantu rekomendasi sesuai lokasi dan kebutuhan proyek.</p>
             <div class="contact-quick-actions">
-                <a href="tel:{{ preg_replace('/\D+/', '', $officePhone) }}"><span>?</span>Telepon</a>
-                <a href="{{ $workWaLink }}"><span>?</span>WhatsApp</a>
-                <a href="mailto:{{ $workEmail }}"><span>?</span>Email</a>
+                <a href="tel:{{ preg_replace('/\D+/', '', $officePhone) }}"><span class="contact-ico phone" aria-hidden="true"></span>Telepon</a>
+                <a href="{{ $workWaLink }}"><span class="contact-ico wa" aria-hidden="true"></span>WhatsApp</a>
+                <a href="mailto:{{ $workEmail }}"><span class="contact-ico mail" aria-hidden="true"></span>Email</a>
             </div>
         </div>
 
@@ -69,9 +69,9 @@
             <aside class="contact-map-card">
                 <h2>Mobile</h2>
                 <div class="contact-lines">
-                    <p><span>?</span><strong>WhatsApp CS:</strong> <a href="{{ $workWaLink }}">{{ $workPhone }}</a></p>
-                    <p><span>?</span><strong>Email:</strong> <a href="mailto:{{ $workEmail }}">{{ $workEmail }}</a></p>
-                    <p><span>?</span><strong>Jam kerja:</strong> {{ $officeHours }}</p>
+                    <p><span class="contact-ico wa" aria-hidden="true"></span><strong>WhatsApp CS:</strong> <a href="{{ $workWaLink }}">{{ $workPhone }}</a></p>
+                    <p><span class="contact-ico mail" aria-hidden="true"></span><strong>Email:</strong> <a href="mailto:{{ $workEmail }}">{{ $workEmail }}</a></p>
+                    <p><span class="contact-ico time" aria-hidden="true"></span><strong>Jam kerja:</strong> {{ $officeHours }}</p>
                 </div>
 
                 <h3>Email</h3>
