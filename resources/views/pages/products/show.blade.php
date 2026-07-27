@@ -4,6 +4,14 @@
 @php
     $productWaText = rawurlencode("Halo Sales EMKO, saya ingin konsultasi produk:\n\nProduk: {$product->product_name}\nHarga estimasi: {$product->formatted_final_price_idr}\nQty:\nNama:\nPerusahaan:\nLokasi proyek:\nKebutuhan teknis:");
     $productWaLink = 'https://wa.me/' . config('emko.sales_whatsapp') . '?text=' . $productWaText;
+    $productFaqs = collect($product->product_faqs ?? [])->filter(fn ($faq) => !empty($faq['question']) || !empty($faq['answer']))->values();
+    if ($productFaqs->isEmpty()) {
+        $productFaqs = collect([
+            ['question' => 'Apakah produk ini ready stock?', 'answer' => 'Ketersediaan stok mengikuti kondisi gudang dan perlu dikonfirmasi oleh tim sales sebelum pemesanan diproses.'],
+            ['question' => 'Apakah harga sudah termasuk pajak dan pengiriman?', 'answer' => 'Harga estimasi belum termasuk pajak, shipping, instalasi, konfigurasi, dan biaya lain sesuai kebutuhan proyek.'],
+            ['question' => 'Apakah bisa konsultasi spesifikasi sebelum order?', 'answer' => 'Bisa. Tim sales dapat membantu menyesuaikan produk dengan kebutuhan genset, panel, ATS, AMF, synchronizing, dan monitoring.'],
+        ]);
+    }
 @endphp
 <section class="detail-hero product-detail-hero">
     <div>
@@ -42,7 +50,7 @@
 </section>
 
 <section class="section split top-align"><div><h2>Fitur Utama</h2><ul class="feature-list">@foreach($product->features ?? [] as $feature)<li>{{ $feature }}</li>@endforeach</ul></div><div><h2>Spesifikasi</h2><ul class="spec-list">@foreach($product->specifications ?? [] as $spec)<li>{{ $spec }}</li>@endforeach</ul><a class="btn btn-outline" href="{{ $product->datasheet_file ?: route('downloads') }}">Download Datasheet</a></div></section>
-@if(!empty($product->product_faqs))
+@if($productFaqs->isNotEmpty())
 <section class="section product-faq-section">
     <div class="section-head">
         <div>
@@ -52,7 +60,7 @@
         <a href="{{ route('quotation.create', ['product' => $product->id]) }}">Tanya Sales</a>
     </div>
     <div class="product-faq-list">
-        @foreach($product->product_faqs as $faq)
+        @foreach($productFaqs as $faq)
             @if(!empty($faq['question']) || !empty($faq['answer']))
                 <details class="product-faq-item">
                     <summary>{{ $faq['question'] ?: 'Informasi Produk' }}</summary>
