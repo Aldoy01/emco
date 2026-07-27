@@ -48,6 +48,8 @@
     </div>
 
     <label>Deskripsi Singkat<textarea name="short_description">{{ old('short_description',$product->short_description) }}</textarea></label>
+    @php($productFaqText = collect($product->product_faqs ?? [])->map(fn($faq) => trim(($faq['question'] ?? '') . ' | ' . ($faq['answer'] ?? '')))->implode("\n"))
+    <label>FAQ Produk<textarea name="product_faqs_text" placeholder="Contoh:\nApakah produk ready stock? | Stok mengikuti ketersediaan gudang dan konfirmasi sales.\nApakah bisa dibantu instalasi? | Bisa, tim sales akan mengarahkan kebutuhan instalasi sesuai proyek.">{{ old('product_faqs_text',$productFaqText) }}</textarea><small>Isi satu FAQ per baris dengan format: Pertanyaan | Jawaban.</small></label>
     <label>Fitur, satu baris per item<textarea name="features_text">{{ old('features_text',implode("\n",$product->features ?? [])) }}</textarea></label>
     <label>Spesifikasi, satu baris per item<textarea name="specifications_text">{{ old('specifications_text',implode("\n",$product->specifications ?? [])) }}</textarea></label>
     <label>Informasi Pembelian<textarea name="purchase_information" placeholder="Contoh: Untuk pembelian produk ini, silakan hubungi sales untuk konfirmasi stok, jadwal pengiriman, dan kebutuhan konfigurasi proyek.">{{ old('purchase_information',$product->purchase_information) }}</textarea></label>

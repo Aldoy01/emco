@@ -56,6 +56,7 @@ class ProductController extends Controller
             'features_text' => 'nullable|string',
             'specifications_text' => 'nullable|string',
             'purchase_information' => 'nullable|string|max:1200',
+            'product_faqs_text' => 'nullable|string',
             'price_usd' => 'nullable|numeric|min:0',
             'discount_percent' => 'nullable|numeric|min:0|max:100',
             'final_price_usd' => 'nullable|numeric|min:0',
@@ -72,8 +73,9 @@ class ProductController extends Controller
         $data['final_price_usd'] = round(((float) $data['price_usd']) * (100 - (float) $data['discount_percent']) / 100, 2);
         $data['features'] = collect(preg_split('/\r\n|\r|\n/', $request->features_text ?? ''))->filter()->values()->all();
         $data['specifications'] = collect(preg_split('/\r\n|\r|\n/', $request->specifications_text ?? ''))->filter()->values()->all();
+        $data['product_faqs'] = $this->parseFaqs($request->product_faqs_text ?? '');
         $data['is_featured'] = $request->boolean('is_featured');
-        unset($data['features_text'], $data['specifications_text']);
+        unset($data['features_text'], $data['specifications_text'], $data['product_faqs_text']);
 
         if ($request->hasFile('image')) {
             if ($product) {
@@ -87,6 +89,32 @@ class ProductController extends Controller
         return $data;
     }
 
+    private function parseFaqs(string $text): array
+    {
+        return collect(preg_split('/\r\n|\r|\n/', $text))
+            ->map(function ($line) {
+                $line = trim($line);
+                if ($line === '') {
+                    return null;
+                }
+
+                [$question, $answer] = array_pad(preg_split('/\s*\|\s*/', $line, 2), 2, '');
+                $question = trim($question);
+                $answer = trim($answer);
+
+                if ($question === '' && $answer === '') {
+                    return null;
+                }
+
+                return [
+                    'question' => $question,
+                    'answer' => $answer,
+                ];
+            })
+            ->filter(fn ($item) => $item && ($item['question'] !== '' || $item['answer'] !== ''))
+            ->values()
+            ->all();
+    }
     private function storeImage(Request $request): string
     {
         $file = $request->file('image');

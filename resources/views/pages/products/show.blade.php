@@ -42,6 +42,27 @@
 </section>
 
 <section class="section split top-align"><div><h2>Fitur Utama</h2><ul class="feature-list">@foreach($product->features ?? [] as $feature)<li>{{ $feature }}</li>@endforeach</ul></div><div><h2>Spesifikasi</h2><ul class="spec-list">@foreach($product->specifications ?? [] as $spec)<li>{{ $spec }}</li>@endforeach</ul><a class="btn btn-outline" href="{{ $product->datasheet_file ?: route('downloads') }}">Download Datasheet</a></div></section>
+@if(!empty($product->product_faqs))
+<section class="section product-faq-section">
+    <div class="section-head">
+        <div>
+            <p class="eyebrow">Product FAQ</p>
+            <h2>Pertanyaan yang sering diajukan</h2>
+        </div>
+        <a href="{{ route('quotation.create', ['product' => $product->id]) }}">Tanya Sales</a>
+    </div>
+    <div class="product-faq-list">
+        @foreach($product->product_faqs as $faq)
+            @if(!empty($faq['question']) || !empty($faq['answer']))
+                <details class="product-faq-item">
+                    <summary>{{ $faq['question'] ?: 'Informasi Produk' }}</summary>
+                    <p>{{ $faq['answer'] ?: '-' }}</p>
+                </details>
+            @endif
+        @endforeach
+    </div>
+</section>
+@endif
 
 @if($comparisonGroups->isNotEmpty())
 <section class="section comparison-section">
