@@ -29,7 +29,14 @@
     <label>Ringkasan Artikel<textarea name="excerpt" maxlength="500" rows="3">{{ old('excerpt', $article->excerpt) }}</textarea></label>
 
     <label>Isi Artikel</label>
-    <div class="word-editor-shell">
+    <div class="word-editor-shell pro-editor-shell">
+        <div class="pro-editor-head">
+            <div>
+                <strong>Editor Artikel</strong>
+                <span>Format konten blog dengan heading, tabel sederhana, link, warna, alignment, dan preview dokumen.</span>
+            </div>
+            <small id="wordCount">0 kata</small>
+        </div>
         <div class="word-editor-ribbon" role="toolbar" aria-label="Toolbar artikel">
             <div class="word-editor-group">
                 <span>Dokumen</span>
@@ -77,6 +84,7 @@
             <div class="word-editor-group compact">
                 <span>Insert</span>
                 <button type="button" data-link="true">Link</button>
+                <button type="button" data-table="true">Table</button>
                 <button type="button" data-command="insertHorizontalRule">Garis</button>
                 <button type="button" data-command="removeFormat">Clear</button>
             </div>
@@ -85,8 +93,8 @@
             <div id="articleEditor" class="word-editor" contenteditable="true" data-placeholder="Tulis artikel di sini...">{!! old('body', $article->body) !!}</div>
         </div>
         <div class="word-editor-status">
-            <span id="wordCount">0 kata</span>
-            <span>Auto save ke form saat diketik</span>
+            <span>Konten otomatis tersimpan ke form saat diketik.</span>
+            <span>Gunakan Preview untuk melihat hasil di halaman artikel.</span>
         </div>
     </div>
     <textarea id="articleBodyInput" name="body" hidden>{{ old('body', $article->body) }}</textarea>
@@ -136,6 +144,8 @@
             if (button.dataset.link) {
                 var url = window.prompt('Masukkan URL link');
                 if (url) exec('createLink', url);
+            } else if (button.dataset.table) {
+                exec('insertHTML', '<table><tbody><tr><th>Kolom 1</th><th>Kolom 2</th></tr><tr><td>Isi</td><td>Isi</td></tr></tbody></table><p></p>');
             } else {
                 exec(button.dataset.command, button.dataset.value);
             }
