@@ -360,8 +360,10 @@
     </style>
 
     @stack('styles')
+    @include('partials.analytics-head')
 </head>
 <body>
+    @include('partials.analytics-body')
 
 <!-- TOP BAR -->
 <div class="top-bar">

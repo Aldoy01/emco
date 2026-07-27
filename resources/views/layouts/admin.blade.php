@@ -6,8 +6,10 @@
     <title>@yield('title', 'Admin EMKO CRM')</title>
     <link rel="stylesheet" href="{{ asset('css/emko.css') }}?v={{ filemtime(public_path('css/emko.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/admin-orders.css') }}?v={{ filemtime(public_path('css/admin-orders.css')) }}">
+    @include('partials.analytics-head')
 </head>
 <body class="admin-body crm-shell">
+    @include('partials.analytics-body')
     <aside class="admin-sidebar crm-sidebar">
         <a class="brand crm-brand crm-logo-link" href="{{ route('admin.dashboard') }}" aria-label="EMKO Partnership by Tramatekid">
             <img class="crm-logo" src="{{ asset('images/emko-partnership-tramatekid.png') }}" alt="EMKO Partnership by Tramatekid">
