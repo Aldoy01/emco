@@ -9,7 +9,6 @@
     @include('partials.analytics-head')
 </head>
 <body class="public-shell">
-    @include('partials.analytics-body')
     @php
         $salesWaText = rawurlencode("Halo Sales EMKO, saya ingin konsultasi produk EMKO / Gencontrol Indonesia.\n\nNama:\nPerusahaan:\nKebutuhan produk:\nQty:\nLokasi proyek:");
         $salesWaLink = 'https://wa.me/' . config('emko.sales_whatsapp') . '?text=' . $salesWaText;

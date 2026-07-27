@@ -12,7 +12,6 @@
     @include('partials.analytics-head')
 </head>
 <body>
-    @include('partials.analytics-body')
     <div class="login-wrap">
         <div class="login-brand">
             <img class="login-logo" src="{{ asset('images/emko-partnership-tramatekid.png') }}" alt="EMKO Partnership by Tramatekid">
