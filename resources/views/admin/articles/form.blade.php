@@ -29,14 +29,7 @@
     <label>Ringkasan Artikel<textarea name="excerpt" maxlength="500" rows="3">{{ old('excerpt', $article->excerpt) }}</textarea></label>
 
     <label>Isi Artikel</label>
-    <div class="cms-editor-shell">
-        <div class="cms-editor-head">
-            <div>
-                <strong>CMS Article Editor</strong>
-                <span>Editor profesional dengan preview, fullscreen, code view, table, image, media, word count, dan paste dari Word/Google Docs.</span>
-            </div>
-            <small>Self-hosted TinyMCE</small>
-        </div>
+    <div class="cms-editor-shell minimal-cms-editor">
         <textarea id="articleBodyInput" class="rich-cms-editor" name="body">{{ old('body', $article->body) }}</textarea>
     </div>
 
@@ -68,25 +61,43 @@
             license_key: 'gpl',
             base_url: "{{ asset('vendor/tinymce') }}",
             suffix: '.min',
-            height: 660,
+            height: 360,
             branding: false,
             promotion: false,
-            menubar: 'file edit view insert format tools table help',
-            plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount autoresize',
-            toolbar_mode: 'sliding',
-            toolbar: [
-                'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor removeformat',
-                'alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media table hr | preview fullscreen code'
-            ].join(' | '),
-            block_formats: 'Paragraph=p; Heading 1=h1; Heading 2=h2; Heading 3=h3; Quote=blockquote',
-            font_family_formats: 'Inter=Inter,Arial,sans-serif; Arial=arial,helvetica,sans-serif; Georgia=georgia,palatino,serif; Times New Roman=times new roman,times,serif; Courier New=courier new,courier,monospace',
-            font_size_formats: '12px 14px 16px 18px 20px 24px 28px 32px 40px',
+            menubar: false,
+            statusbar: false,
+            plugins: 'advlist autolink lists link image preview searchreplace visualblocks code fullscreen media table wordcount autoresize',
+            toolbar_mode: 'scrolling',
+            toolbar: 'blocks h2Button h3Button h4Button | bold italic strikethrough link forecolor | bullist numlist | alignleft aligncenter alignright alignjustify | image media blockquote code visualblocks | hr table | undo redo',
+            block_formats: 'Heading=h1; Paragraph=p; Heading 2=h2; Heading 3=h3; Heading 4=h4; Quote=blockquote',
+            font_size_formats: '14px 16px 18px 20px 24px 28px 32px',
             paste_data_images: true,
             image_title: true,
             automatic_uploads: false,
             file_picker_types: 'image',
-            content_style: 'body{font-family:Inter,Arial,sans-serif;color:#10243f;font-size:16px;line-height:1.75;padding:24px;}h1,h2,h3{line-height:1.2;color:#10243f;}blockquote{margin:18px 0;padding:14px 18px;border-left:4px solid #167a7f;border-radius:10px;background:#f4fbfa;color:#10243f;}table{border-collapse:collapse;width:100%;}td,th{border:1px solid #dbe5ef;padding:10px;}img{max-width:100%;height:auto;}',
+            content_style: 'body{font-family:Inter,Arial,sans-serif;color:#10243f;font-size:16px;line-height:1.75;padding:24px;background:#edf3ff;}h1,h2,h3,h4{line-height:1.2;color:#10243f;}blockquote{margin:18px 0;padding:14px 18px;border-left:4px solid #167a7f;border-radius:10px;background:#ffffff;color:#10243f;}table{border-collapse:collapse;width:100%;background:#fff;}td,th{border:1px solid #dbe5ef;padding:10px;}img{max-width:100%;height:auto;}',
             setup: function (editor) {
+                editor.ui.registry.addButton('h2Button', {
+                    text: 'H2',
+                    tooltip: 'Heading 2',
+                    onAction: function () {
+                        editor.execCommand('FormatBlock', false, 'h2');
+                    }
+                });
+                editor.ui.registry.addButton('h3Button', {
+                    text: 'H3',
+                    tooltip: 'Heading 3',
+                    onAction: function () {
+                        editor.execCommand('FormatBlock', false, 'h3');
+                    }
+                });
+                editor.ui.registry.addButton('h4Button', {
+                    text: 'H4',
+                    tooltip: 'Heading 4',
+                    onAction: function () {
+                        editor.execCommand('FormatBlock', false, 'h4');
+                    }
+                });
                 editor.on('change keyup undo redo', function () {
                     editor.save();
                 });
