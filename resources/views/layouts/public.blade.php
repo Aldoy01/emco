@@ -24,7 +24,7 @@
 
             <a class="{{ request()->routeIs('downloads') ? 'active' : '' }}" href="{{ route('downloads') }}">Download</a>
             <a class="{{ request()->routeIs('solutions') ? 'active' : '' }}" href="{{ route('solutions') }}">Solusi</a>
-            <a class="{{ request()->routeIs('articles') ? 'active' : '' }}" href="{{ route('articles') }}">Artikel</a>
+            <a class="{{ request()->routeIs('articles') || request()->routeIs('articles.*') ? 'active' : '' }}" href="{{ route('articles') }}">Artikel</a>
             <a class="{{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Kontak</a>
         </nav>
         <div class="header-actions">

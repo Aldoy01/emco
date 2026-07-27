@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 use App\Http\Controllers\Admin\FinanceSettingController;
 use App\Http\Controllers\Admin\HomeContentController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
@@ -23,6 +24,7 @@ Route::get('/pricelist', [PageController::class,'pricelist'])->name('pricelist')
 Route::get('/download-catalogue', [PageController::class,'downloads'])->name('downloads');
 Route::get('/solusi/{slug?}', [PageController::class,'solutions'])->name('solutions');
 Route::get('/artikel', [PageController::class,'articles'])->name('articles');
+Route::get('/artikel/{article:slug}', [PageController::class,'article'])->name('articles.show');
 Route::get('/kontak', [PageController::class,'contact'])->name('contact');
 Route::get('/minta-penawaran', [QuotationController::class,'create'])->name('quotation.create');
 Route::post('/minta-penawaran', [QuotationController::class,'store'])->middleware('throttle:rfq')->name('quotation.store');
@@ -61,6 +63,7 @@ Route::middleware(['auth','admin','admin.2fa'])->prefix('admin')->name('admin.')
         Route::resource('quotations', AdminQuotationController::class)->only(['index','show','update']);
         Route::get('content/home', [HomeContentController::class, 'edit'])->name('content.home.edit');
         Route::put('content/home', [HomeContentController::class, 'update'])->name('content.home.update');
+        Route::resource('articles', AdminArticleController::class)->except('show');
         Route::get('security', [AdminSecurityController::class, 'index'])->name('security.index');
         Route::put('users/{user}/reset-password', [AdminUserController::class, 'resetPassword'])->name('users.reset-password');
         Route::resource('users', AdminUserController::class)->except('show', 'destroy');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Admin\HomeContentController;
+use App\Models\Article;
 use App\Models\Category;
 use App\Models\ContentSetting;
 use App\Models\Product;
@@ -135,7 +136,23 @@ class PageController extends Controller
 
     public function articles()
     {
-        return view('pages.articles');
+        return view('pages.articles', [
+            'articles' => Article::published()->latest('published_at')->paginate(9),
+        ]);
+    }
+
+    public function article(Article $article)
+    {
+        abort_unless($article->status === 'published' && $article->published_at && $article->published_at->lte(now()), 404);
+
+        return view('pages.article-show', [
+            'article' => $article,
+            'relatedArticles' => Article::published()
+                ->where('id', '!=', $article->id)
+                ->latest('published_at')
+                ->take(3)
+                ->get(),
+        ]);
     }
 
     public function contact()

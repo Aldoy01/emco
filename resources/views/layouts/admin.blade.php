@@ -26,6 +26,7 @@
             @endif
             @if($adminUser->hasAdminRole(App\Models\User::ROLE_SUPER_ADMIN))
                 <a href="{{ route('admin.content.home.edit') }}" class="{{ request()->routeIs('admin.content.*') ? 'active' : '' }}"><span>HM</span>Konten Home</a>
+                <a href="{{ route('admin.articles.index') }}" class="{{ request()->routeIs('admin.articles.*') ? 'active' : '' }}"><span>AR</span>Artikel</a>
             @endif
             @if($adminUser->hasAdminRole([App\Models\User::ROLE_SUPER_ADMIN, App\Models\User::ROLE_FINANCE]))
                 <a href="{{ route('admin.finance.edit') }}" class="{{ request()->routeIs('admin.finance.*') ? 'active' : '' }}"><span>FN</span>Finance & Invoice</a>

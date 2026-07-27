@@ -1,3 +1,51 @@
-@extends('layouts.public') @section('title','Artikel Generator Controller EMKO') @section('content')
-<section class="page-title"><p class="eyebrow">SEO Content</p><h1>Artikel Edukasi</h1><p>Konten awal untuk membantu customer memahami AMF, ATS, synchronizing, load sharing, remote monitoring, dan battery charger.</p></section><section class="section article-list"><article><h2>Perbedaan AMF, ATS, dan Synchronizing pada Sistem Genset</h2><p>Panduan memilih controller berdasarkan kebutuhan transfer sumber, proteksi, dan paralel generator.</p></article><article><h2>Rekomendasi Generator Controller untuk Data Center dan Rumah Sakit</h2><p>Ringkasan kebutuhan proyek dengan prioritas reliability dan follow-up sales.</p></article><article><h2>Trans AMF vs Trans Auto vs Trans Mini AMF</h2><p>Perbandingan awal untuk menentukan pilihan controller sebelum Hubungi Sales.</p></article></section>
+@extends('layouts.public')
+@section('title','Artikel EMKO Indonesia')
+@section('content')
+<section class="page-title article-hero">
+    <p class="eyebrow">Posting Blog</p>
+    <h1>Artikel Terbaru Kami.</h1>
+    <p>Insight produk, sistem genset, ATS, AMF, synchronizing, dan tips memilih controller yang sesuai kebutuhan proyek.</p>
+</section>
+
+<section class="section article-blog-section">
+    <div class="article-section-head">
+        <div>
+            <span class="section-kicker">EMKO Insight</span>
+            <h2>Panduan teknis dan referensi produk</h2>
+        </div>
+        <span>{{ $articles->total() }} artikel</span>
+    </div>
+
+    <div class="article-card-grid">
+        @forelse($articles as $article)
+            <article class="blog-card">
+                <a class="blog-card-image {{ $article->image ? 'has-image' : '' }}" href="{{ route('articles.show', $article) }}">
+                    @if($article->image)
+                        <img src="{{ asset($article->image) }}" alt="{{ $article->title }}">
+                    @else
+                        <span class="product-placeholder-icon" aria-hidden="true"></span>
+                    @endif
+                </a>
+                <div class="blog-card-body">
+                    <span class="blog-category">{{ $article->category ?: 'EMKO Insight' }}</span>
+                    <h2><a href="{{ route('articles.show', $article) }}">{{ $article->title }}</a></h2>
+                    <p>{{ $article->excerpt ?: Str::limit(strip_tags($article->body), 145) }}</p>
+                    <div class="blog-meta">
+                        <span>{{ optional($article->published_at)->format('d.M.Y') }}</span>
+                        <span>{{ $article->author_name }}</span>
+                    </div>
+                </div>
+            </article>
+        @empty
+            <div class="empty-catalog-state">
+                <strong>Artikel sedang disiapkan.</strong>
+                <p>Konten edukasi EMKO akan tampil di halaman ini setelah dipublikasikan dari admin.</p>
+            </div>
+        @endforelse
+    </div>
+
+    <div class="pagination-wrap">
+        {{ $articles->links() }}
+    </div>
+</section>
 @endsection
