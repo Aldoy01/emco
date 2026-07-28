@@ -52,22 +52,40 @@
 <section class="section split top-align"><div><h2>Fitur Utama</h2><ul class="feature-list">@foreach($product->features ?? [] as $feature)<li>{{ $feature }}</li>@endforeach</ul></div><div><h2>Spesifikasi</h2><ul class="spec-list">@foreach($product->specifications ?? [] as $spec)<li>{{ $spec }}</li>@endforeach</ul><a class="btn btn-outline" href="{{ $product->datasheet_file ?: route('downloads') }}">Download Datasheet</a></div></section>
 @if($productFaqs->isNotEmpty())
 <section class="section product-faq-section">
-    <div class="section-head">
+    <div class="section-head faq-modern-head">
         <div>
             <p class="eyebrow">Product FAQ</p>
-            <h2>Pertanyaan yang sering diajukan</h2>
+            <h2>Pertanyaan umum sebelum order</h2>
+            <p>Ringkasan jawaban cepat sebelum Anda konsultasi spesifikasi, ketersediaan stok, dan kebutuhan proyek.</p>
         </div>
-        <a href="{{ route('quotation.create', ['product' => $product->id]) }}">Tanya Sales</a>
+        <a class="btn btn-gold" href="{{ route('quotation.create', ['product' => $product->id]) }}">Tanya Sales</a>
     </div>
-    <div class="product-faq-list">
-        @foreach($productFaqs as $faq)
-            @if(!empty($faq['question']) || !empty($faq['answer']))
-                <details class="product-faq-item">
-                    <summary>{{ $faq['question'] ?: 'Informasi Produk' }}</summary>
-                    <p>{{ $faq['answer'] ?: '-' }}</p>
-                </details>
-            @endif
-        @endforeach
+    <div class="product-faq-layout">
+        <div class="product-faq-list">
+            @foreach($productFaqs as $faq)
+                @if(!empty($faq['question']) || !empty($faq['answer']))
+                    <details class="product-faq-item" @if($loop->first) open @endif>
+                        <summary><span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $faq['question'] ?: 'Informasi Produk' }}</summary>
+                        <div class="faq-answer">
+                            <p>{{ $faq['answer'] ?: '-' }}</p>
+                        </div>
+                    </details>
+                @endif
+            @endforeach
+        </div>
+        <aside class="faq-help-card">
+            <span class="faq-help-icon" aria-hidden="true"></span>
+            <p class="eyebrow">Butuh jawaban cepat?</p>
+            <h3>Konsultasikan produk ini dengan sales EMKO.</h3>
+            <p>Tim kami bantu cek stok, konfigurasi teknis, pengiriman, invoice, dan rekomendasi unit sesuai kebutuhan panel atau genset.</p>
+            <div class="faq-help-actions">
+                <a class="btn btn-gold" href="{{ $productWaLink }}">WhatsApp Sales</a>
+                <a class="btn btn-outline" href="{{ route('quotation.create', ['product' => $product->id]) }}">Minta Penawaran</a>
+                @if($product->is_purchasable)
+                    <a class="btn btn-soft" href="{{ route('checkout.create', $product) }}">Order Produk</a>
+                @endif
+            </div>
+        </aside>
     </div>
 </section>
 @endif
