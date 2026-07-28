@@ -74,33 +74,6 @@
     </aside>
 </section>
 
-@if($productFaqs->isNotEmpty())
-<section class="section product-faq-section">
-    <div class="section-head faq-modern-head">
-        <div>
-            <p class="eyebrow">Product FAQ</p>
-            <h2>Pertanyaan umum sebelum order</h2>
-            <p>Ringkasan jawaban cepat sebelum Anda konsultasi spesifikasi, ketersediaan stok, dan kebutuhan proyek.</p>
-        </div>
-        <a class="btn btn-gold" href="{{ route('quotation.create', ['product' => $product->id]) }}">Tanya Sales</a>
-    </div>
-    <div class="product-faq-layout faq-only-layout">
-        <div class="product-faq-list">
-            @foreach($productFaqs as $faq)
-                @if(!empty($faq['question']) || !empty($faq['answer']))
-                    <details class="product-faq-item" @if($loop->first) open @endif>
-                        <summary><span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $faq['question'] ?: 'Informasi Produk' }}</summary>
-                        <div class="faq-answer">
-                            <p>{{ $faq['answer'] ?: '-' }}</p>
-                        </div>
-                    </details>
-                @endif
-            @endforeach
-        </div>
-    </div>
-</section>
-@endif
-
 @if($comparisonGroups->isNotEmpty())
 <section class="section comparison-section">
     <div class="section-head">
@@ -181,4 +154,29 @@
 @endif
 
 @if($related->count())<section class="section muted related-products-section"><div class="section-head"><h2>Produk Terkait</h2></div><div class="product-grid catalog-product-grid related-product-grid">@foreach($related as $item) @include('components.product-card',['product'=>$item]) @endforeach</div></section>@endif
+@if($productFaqs->isNotEmpty())
+<section class="section product-faq-section">
+    <div class="section-head faq-modern-head faq-centered-head">
+        <div>
+            <p class="eyebrow">Product FAQ</p>
+            <h2>Pertanyaan umum sebelum order</h2>
+            <p>Ringkasan jawaban cepat sebelum Anda konsultasi spesifikasi, ketersediaan stok, dan kebutuhan proyek.</p>
+        </div>
+    </div>
+    <div class="product-faq-layout faq-only-layout">
+        <div class="product-faq-list">
+            @foreach($productFaqs as $faq)
+                @if(!empty($faq['question']) || !empty($faq['answer']))
+                    <details class="product-faq-item" @if($loop->first) open @endif>
+                        <summary><span>{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>{{ $faq['question'] ?: 'Informasi Produk' }}</summary>
+                        <div class="faq-answer">
+                            <p>{{ $faq['answer'] ?: '-' }}</p>
+                        </div>
+                    </details>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
 @endsection
