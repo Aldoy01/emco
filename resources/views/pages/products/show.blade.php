@@ -78,10 +78,8 @@
 <section class="section comparison-section">
     <div class="section-head">
         <div>
-            <p class="eyebrow">Product Comparison</p>
             <h2>Comparison Table Generator Controller</h2>
         </div>
-        <a href="{{ route('quotation.create', ['product' => $product->id]) }}">Hubungi Sales</a>
     </div>
 
     @foreach($comparisonGroups as $group)
@@ -124,28 +122,6 @@
                             </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        <tr class="comparison-actions-row">
-                            <th>Pilih Produk</th>
-                            @foreach($group['columns'] as $column)
-                                @php($item = $column['product'])
-                                <td class="{{ optional($item)->id === $product->id ? 'active-column' : '' }}">
-                                    @if($item)
-                                        <div class="comparison-actions">
-                                            @if($item->is_purchasable)
-                                                <a class="btn btn-gold" href="{{ route('checkout.create', $item) }}">Beli</a>
-                                            @else
-                                                <span class="btn btn-outline disabled-action">{{ $item->status_label }}</span>
-                                            @endif
-                                            <a class="btn btn-outline" href="{{ route('quotation.create', ['product' => $item->id]) }}">Hubungi Sales</a>
-                                        </div>
-                                    @else
-                                        <span class="comparison-muted">By request</span>
-                                    @endif
-                                </td>
-                            @endforeach
-                        </tr>
-                    </tfoot>
                 </table>
             </div>
         </div>
@@ -158,9 +134,7 @@
 <section class="section product-faq-section">
     <div class="section-head faq-modern-head faq-centered-head">
         <div>
-            <p class="eyebrow">Product FAQ</p>
-            <h2>Pertanyaan umum sebelum order</h2>
-            <p>Ringkasan jawaban cepat sebelum Anda konsultasi spesifikasi, ketersediaan stok, dan kebutuhan proyek.</p>
+            <h2>FAQs</h2>
         </div>
     </div>
     <div class="product-faq-layout faq-only-layout">
