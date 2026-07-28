@@ -49,7 +49,31 @@
     </aside>
 </section>
 
-<section class="section split top-align"><div><h2>Fitur Utama</h2><ul class="feature-list">@foreach($product->features ?? [] as $feature)<li>{{ $feature }}</li>@endforeach</ul></div><div><h2>Spesifikasi</h2><ul class="spec-list">@foreach($product->specifications ?? [] as $spec)<li>{{ $spec }}</li>@endforeach</ul><a class="btn btn-outline" href="{{ $product->datasheet_file ?: route('downloads') }}">Download Datasheet</a></div></section>
+<section class="section split top-align product-tech-sales-section">
+    <div>
+        <h2>Fitur Utama</h2>
+        <ul class="feature-list">@foreach($product->features ?? [] as $feature)<li>{{ $feature }}</li>@endforeach</ul>
+    </div>
+    <div>
+        <h2>Spesifikasi</h2>
+        <ul class="spec-list">@foreach($product->specifications ?? [] as $spec)<li>{{ $spec }}</li>@endforeach</ul>
+        <a class="btn btn-outline" href="{{ $product->datasheet_file ?: route('downloads') }}">Download Datasheet</a>
+    </div>
+    <aside class="faq-help-card specs-sales-card">
+        <span class="faq-help-icon" aria-hidden="true"></span>
+        <p class="eyebrow">Butuh jawaban cepat?</p>
+        <h3>Konsultasikan spesifikasi produk ini.</h3>
+        <p>Tim sales bantu cek stok, konfigurasi teknis, jadwal pengiriman, invoice, dan rekomendasi unit sesuai kebutuhan panel atau genset.</p>
+        <div class="faq-help-actions">
+            <a class="btn btn-gold" href="{{ $productWaLink }}">WhatsApp Sales</a>
+            <a class="btn btn-outline" href="{{ route('quotation.create', ['product' => $product->id]) }}">Minta Penawaran</a>
+            @if($product->is_purchasable)
+                <a class="btn btn-soft" href="{{ route('checkout.create', $product) }}">Order Produk</a>
+            @endif
+        </div>
+    </aside>
+</section>
+
 @if($productFaqs->isNotEmpty())
 <section class="section product-faq-section">
     <div class="section-head faq-modern-head">
@@ -60,7 +84,7 @@
         </div>
         <a class="btn btn-gold" href="{{ route('quotation.create', ['product' => $product->id]) }}">Tanya Sales</a>
     </div>
-    <div class="product-faq-layout">
+    <div class="product-faq-layout faq-only-layout">
         <div class="product-faq-list">
             @foreach($productFaqs as $faq)
                 @if(!empty($faq['question']) || !empty($faq['answer']))
@@ -73,19 +97,6 @@
                 @endif
             @endforeach
         </div>
-        <aside class="faq-help-card">
-            <span class="faq-help-icon" aria-hidden="true"></span>
-            <p class="eyebrow">Butuh jawaban cepat?</p>
-            <h3>Konsultasikan produk ini dengan sales EMKO.</h3>
-            <p>Tim kami bantu cek stok, konfigurasi teknis, pengiriman, invoice, dan rekomendasi unit sesuai kebutuhan panel atau genset.</p>
-            <div class="faq-help-actions">
-                <a class="btn btn-gold" href="{{ $productWaLink }}">WhatsApp Sales</a>
-                <a class="btn btn-outline" href="{{ route('quotation.create', ['product' => $product->id]) }}">Minta Penawaran</a>
-                @if($product->is_purchasable)
-                    <a class="btn btn-soft" href="{{ route('checkout.create', $product) }}">Order Produk</a>
-                @endif
-            </div>
-        </aside>
     </div>
 </section>
 @endif
