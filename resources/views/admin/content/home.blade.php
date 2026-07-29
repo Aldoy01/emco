@@ -57,6 +57,29 @@
         <label>Teks CTA<textarea name="cta_text" rows="4" required>{{ old('cta_text',$content['cta_text'] ?? '') }}</textarea></label>
     </section>
 
+    <section class="content-section-block">
+        <div class="section-head compact">
+            <div>
+                <p class="crm-kicker">SEO Meta</p>
+                <h2>Meta Title & Description</h2>
+            </div>
+        </div>
+        <p class="form-help">Atur meta SEO untuk menu utama website. Menu Download tidak dimasukkan sesuai kebutuhan.</p>
+        @foreach($seo as $key => $meta)
+            <div class="seo-meta-card">
+                <h3>{{ $meta['label'] ?? ucfirst($key) }}</h3>
+                <div class="form-grid">
+                    <label>Meta Title
+                        <input name="seo_{{ $key }}_title" value="{{ old('seo_' . $key . '_title', $meta['title'] ?? '') }}" maxlength="180">
+                    </label>
+                    <label>Meta Description
+                        <textarea name="seo_{{ $key }}_description" rows="3" maxlength="300">{{ old('seo_' . $key . '_description', $meta['description'] ?? '') }}</textarea>
+                    </label>
+                </div>
+            </div>
+        @endforeach
+    </section>
+
     @if($errors->any())<div class="alert error">Mohon periksa kembali konten Home.</div>@endif
     <div class="form-actions"><button class="btn btn-gold">Simpan Konten Home</button><a class="btn btn-outline" href="{{ route('home') }}">Preview Website</a></div>
 </form>

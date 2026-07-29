@@ -3,7 +3,32 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>@yield('title','EMKO Gencontrol Indonesia')</title>
+    @php
+        $seoRouteKey = match (true) {
+            request()->routeIs('home') => 'home',
+            request()->routeIs('products.index') || request()->routeIs('categories.*') => 'products',
+            request()->routeIs('solutions') => 'solutions',
+            request()->routeIs('articles') || request()->routeIs('articles.*') => 'articles',
+            request()->routeIs('contact') => 'contact',
+            request()->routeIs('pricelist') => 'pricelist',
+            default => null,
+        };
+        $seoSettings = $seoRouteKey
+            ? \App\Models\ContentSetting::getValue('seo', \App\Http\Controllers\Admin\HomeContentController::seoDefaults())
+            : [];
+        $seoCurrent = $seoRouteKey ? ($seoSettings[$seoRouteKey] ?? []) : [];
+        $metaTitle = trim($seoCurrent['title'] ?? '') ?: trim($__env->yieldContent('title', 'EMKO Gencontrol Indonesia'));
+        $metaDescription = trim($seoCurrent['description'] ?? '') ?: 'EMKO Indonesia menyediakan generator controller, ATS, AMF, synchronizing, load sharing, monitoring, battery charger, katalog produk, invoice, dan layanan sales.';
+    @endphp
+    <title>{{ $metaTitle }}</title>
+    @if(!request()->routeIs('downloads'))
+        <meta name="description" content="{{ $metaDescription }}">
+        <meta property="og:title" content="{{ $metaTitle }}">
+        <meta property="og:description" content="{{ $metaDescription }}">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <link rel="canonical" href="{{ url()->current() }}">
+    @endif
     <link rel="stylesheet" href="{{ asset('css/emko.css') }}?v={{ filemtime(public_path('css/emko.css')) }}">
     @stack('styles')
     @include('partials.analytics-head')

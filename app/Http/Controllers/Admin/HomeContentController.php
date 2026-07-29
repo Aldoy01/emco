@@ -12,7 +12,10 @@ class HomeContentController extends Controller
 {
     public function edit()
     {
-        return view('admin.content.home', ['content' => ContentSetting::getValue('home', self::defaults())]);
+        return view('admin.content.home', [
+            'content' => ContentSetting::getValue('home', self::defaults()),
+            'seo' => ContentSetting::getValue('seo', self::seoDefaults()),
+        ]);
     }
 
     public function update(Request $request)
@@ -32,6 +35,18 @@ class HomeContentController extends Controller
             'cta_eyebrow' => 'required|string|max:120',
             'cta_title' => 'required|string|max:180',
             'cta_text' => 'required|string|max:800',
+            'seo_home_title' => 'nullable|string|max:180',
+            'seo_home_description' => 'nullable|string|max:300',
+            'seo_products_title' => 'nullable|string|max:180',
+            'seo_products_description' => 'nullable|string|max:300',
+            'seo_solutions_title' => 'nullable|string|max:180',
+            'seo_solutions_description' => 'nullable|string|max:300',
+            'seo_articles_title' => 'nullable|string|max:180',
+            'seo_articles_description' => 'nullable|string|max:300',
+            'seo_contact_title' => 'nullable|string|max:180',
+            'seo_contact_description' => 'nullable|string|max:300',
+            'seo_pricelist_title' => 'nullable|string|max:180',
+            'seo_pricelist_description' => 'nullable|string|max:300',
             'hero_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
         ]);
 
@@ -68,6 +83,8 @@ class HomeContentController extends Controller
             'cta_text' => $data['cta_text'],
         ]);
 
+        ContentSetting::setValue('seo', $this->seoPayload($data));
+
         return redirect()->route('admin.content.home.edit')->with('success', 'Konten Home berhasil diperbarui.');
     }
 
@@ -102,6 +119,42 @@ class HomeContentController extends Controller
         ];
     }
 
+    public static function seoDefaults(): array
+    {
+        return [
+            'home' => [
+                'label' => 'Home',
+                'title' => 'EMKO Indonesia - Generator Controller, ATS, AMF & Synchronizing',
+                'description' => 'Katalog resmi EMKO Indonesia untuk generator controller, ATS, AMF, synchronizing, load sharing, monitoring, dan battery charger.',
+            ],
+            'products' => [
+                'label' => 'Produk',
+                'title' => 'Produk EMKO Indonesia - Generator Controller & ATS',
+                'description' => 'Lihat katalog produk EMKO Indonesia lengkap dengan harga estimasi, spesifikasi, comparison table, dan pilihan order atau penawaran.',
+            ],
+            'solutions' => [
+                'label' => 'Solusi',
+                'title' => 'Solusi Generator Controller EMKO untuk Panel Genset',
+                'description' => 'Solusi EMKO untuk kebutuhan AMF, ATS, synchronizing, load sharing, remote monitoring, dan sistem kontrol genset proyek.',
+            ],
+            'articles' => [
+                'label' => 'Artikel',
+                'title' => 'Artikel EMKO Indonesia - Insight Generator Controller',
+                'description' => 'Artikel dan insight EMKO Indonesia seputar generator controller, ATS, AMF, synchronizing, load sharing, dan kebutuhan panel genset.',
+            ],
+            'contact' => [
+                'label' => 'Kontak',
+                'title' => 'Kontak EMKO Indonesia - Sales & Konsultasi Produk',
+                'description' => 'Hubungi sales EMKO Indonesia untuk konsultasi produk, penawaran, invoice, pengiriman, dan kebutuhan teknis proyek genset.',
+            ],
+            'pricelist' => [
+                'label' => 'Pricelist',
+                'title' => 'Pricelist EMKO Indonesia - Harga Produk Generator Controller',
+                'description' => 'Daftar harga estimasi produk EMKO Indonesia dalam Rupiah untuk kebutuhan generator controller, ATS, AMF, dan monitoring.',
+            ],
+        ];
+    }
+
     private function lines(string $text): array
     {
         return collect(preg_split('/\r\n|\r|\n/', $text))->map(fn($line) => trim($line))->filter()->values()->all();
@@ -113,5 +166,16 @@ class HomeContentController extends Controller
             [$title, $body] = array_pad(explode('|', $line, 2), 2, '');
             return ['title' => trim($title), 'body' => trim($body)];
         })->filter(fn($item) => $item['title'] !== '' || $item['body'] !== '')->values()->all();
+    }
+
+    private function seoPayload(array $data): array
+    {
+        return collect(self::seoDefaults())->mapWithKeys(function ($item, $key) use ($data) {
+            return [$key => [
+                'label' => $item['label'],
+                'title' => $data['seo_' . $key . '_title'] ?: $item['title'],
+                'description' => $data['seo_' . $key . '_description'] ?: $item['description'],
+            ]];
+        })->all();
     }
 }
