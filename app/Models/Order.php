@@ -24,12 +24,15 @@ class Order extends Model
         'user_id', 'product_id', 'invoice_number', 'customer_name', 'company', 'email', 'phone',
         'shipping_address', 'quantity', 'unit_price_idr', 'subtotal_idr', 'original_subtotal_idr',
         'discount_idr', 'tax_percent', 'tax_idr', 'shipping_cost_idr', 'total_idr', 'payment_method',
-        'status', 'notes', 'payment_proof', 'paid_at'
+        'status', 'notes', 'payment_proof', 'paid_at', 'midtrans_order_id', 'midtrans_transaction_id',
+        'midtrans_payment_type', 'midtrans_transaction_status', 'midtrans_fraud_status',
+        'midtrans_snap_token', 'midtrans_redirect_url', 'midtrans_payload',
     ];
 
     protected $casts = [
         'paid_at' => 'datetime',
         'tax_percent' => 'float',
+        'midtrans_payload' => 'array',
     ];
 
     public function getRouteKeyName(): string

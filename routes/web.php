@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\AdminTwoFactorController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\MemberDashboardController;
 use App\Http\Controllers\MemberProfileController;
+use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\QuotationController;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,7 @@ Route::post('/minta-penawaran', [QuotationController::class,'store'])->middlewar
 Route::get('/checkout/{product:slug}', [CheckoutController::class, 'create'])->name('checkout.create');
 Route::post('/checkout/{product:slug}', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::post('/checkout/{product:slug}/login', [CheckoutController::class, 'login'])->middleware('guest')->name('checkout.login');
+Route::post('/midtrans/notification', [MidtransController::class, 'notification'])->name('midtrans.notification');
 
 Route::middleware('auth')->group(function () {
     Route::get('/member/dashboard', [MemberDashboardController::class, 'index'])->name('member.dashboard');
@@ -40,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/member/password', [MemberProfileController::class, 'password'])->name('member.password.edit');
     Route::put('/member/password', [MemberProfileController::class, 'updatePassword'])->name('member.password.update');
     Route::get('/invoice/{order:invoice_number}', [CheckoutController::class, 'invoice'])->name('checkout.invoice');
+    Route::post('/invoice/{order:invoice_number}/pay-midtrans', [MidtransController::class, 'pay'])->name('checkout.midtrans.pay');
     Route::get('/invoice/{order:invoice_number}/konfirmasi', [CheckoutController::class, 'confirm'])->name('checkout.confirm');
     Route::post('/invoice/{order:invoice_number}/konfirmasi', [CheckoutController::class, 'storeConfirmation'])->name('checkout.confirm.store');
 });

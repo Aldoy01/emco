@@ -26,7 +26,16 @@
                 <p>Finance: <strong>{{ $finance['finance_name'] ?? 'Finance EMKO' }}</strong><br>{{ $finance['finance_email'] ?? '' }}{{ !empty($finance['finance_email']) && !empty($finance['finance_phone']) ? ' · ' : '' }}{{ $finance['finance_phone'] ?? '' }}</p>
             @endif
         </div>
-        <div class="invoice-actions"><a class="btn btn-gold" href="{{ route('checkout.confirm', $order) }}">Konfirmasi Pembayaran</a><a class="btn btn-outline" href="{{ route('products.show', $order->product) }}">Kembali ke Produk</a></div>
+        <div class="invoice-actions">
+            @if(config('emko.midtrans.server_key') && config('emko.midtrans.client_key') && $order->status !== 'payment_verified')
+                <form method="post" action="{{ route('checkout.midtrans.pay', $order) }}">
+                    @csrf
+                    <button class="btn btn-gold" type="submit">Bayar via Midtrans</button>
+                </form>
+            @endif
+            <a class="btn btn-outline" href="{{ route('checkout.confirm', $order) }}">Konfirmasi Pembayaran</a>
+            <a class="btn btn-outline" href="{{ route('products.show', $order->product) }}">Kembali ke Produk</a>
+        </div>
     </div>
     <aside class="notification-panel"><h2>Notifikasi Order</h2><p>Invoice dibuat dan siap dikirim ke email customer. Untuk produksi, SMTP bisnis bisa diaktifkan agar invoice terkirim otomatis.</p><div class="notice-step active"><strong>1. Invoice dibuat</strong><span>{{ $order->created_at->format('d M Y H:i') }}</span></div><div class="notice-step {{ $order->status !== 'pending_payment' ? 'active' : '' }}"><strong>2. Konfirmasi pembayaran</strong><span>{{ $order->paid_at ? $order->paid_at->format('d M Y H:i') : 'Menunggu customer' }}</span></div><div class="notice-step"><strong>3. Verifikasi & pengiriman</strong><span>Sales/admin follow-up</span></div></aside>
 </section>

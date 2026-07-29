@@ -16,4 +16,11 @@ return [
     'product_upload_path' => env('PRODUCT_UPLOAD_PATH', public_path('uploads/products')),
     'product_upload_url' => trim(env('PRODUCT_UPLOAD_URL', 'uploads/products'), '/'),
     'invoice_tax_percent' => (float) env('EMKO_INVOICE_TAX_PERCENT', 11),
+    'midtrans' => [
+        'server_key' => env('MIDTRANS_SERVER_KEY'),
+        'client_key' => env('MIDTRANS_CLIENT_KEY'),
+        'is_production' => filter_var(env('MIDTRANS_IS_PRODUCTION', false), FILTER_VALIDATE_BOOLEAN),
+        'expiry_unit' => env('MIDTRANS_EXPIRY_UNIT', 'hour'),
+        'expiry_duration' => (int) env('MIDTRANS_EXPIRY_DURATION', 24),
+    ],
 ];
