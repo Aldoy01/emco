@@ -37,8 +37,6 @@ class HomeContentController extends Controller
             'cta_text' => 'required|string|max:800',
             'seo_home_title' => 'nullable|string|max:180',
             'seo_home_description' => 'nullable|string|max:300',
-            'seo_products_title' => 'nullable|string|max:180',
-            'seo_products_description' => 'nullable|string|max:300',
             'seo_solutions_title' => 'nullable|string|max:180',
             'seo_solutions_description' => 'nullable|string|max:300',
             'seo_articles_title' => 'nullable|string|max:180',
@@ -126,11 +124,6 @@ class HomeContentController extends Controller
                 'label' => 'Home',
                 'title' => 'EMKO Indonesia - Generator Controller, ATS, AMF & Synchronizing',
                 'description' => 'Katalog resmi EMKO Indonesia untuk generator controller, ATS, AMF, synchronizing, load sharing, monitoring, dan battery charger.',
-            ],
-            'products' => [
-                'label' => 'Produk',
-                'title' => 'Produk EMKO Indonesia - Generator Controller & ATS',
-                'description' => 'Lihat katalog produk EMKO Indonesia lengkap dengan harga estimasi, spesifikasi, comparison table, dan pilihan order atau penawaran.',
             ],
             'solutions' => [
                 'label' => 'Solusi',

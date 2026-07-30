@@ -1,5 +1,7 @@
 @extends('layouts.public')
 @section('title',$product->product_name.' - EMKO')
+@section('meta_title', $product->meta_title ?: $product->product_name . ' - EMKO Indonesia')
+@section('meta_description', $product->meta_description ?: \Illuminate\Support\Str::limit(strip_tags($product->short_description ?: 'Produk EMKO Indonesia untuk kebutuhan generator controller, ATS, AMF, synchronizing, load sharing, dan monitoring.'), 155))
 @section('content')
 @php
     $productWaText = rawurlencode("Halo Sales EMKO, saya ingin konsultasi produk:\n\nProduk: {$product->product_name}\nHarga estimasi: {$product->formatted_final_price_idr}\nQty:\nNama:\nPerusahaan:\nLokasi proyek:\nKebutuhan teknis:");

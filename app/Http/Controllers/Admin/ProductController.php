@@ -61,6 +61,8 @@ class ProductController extends Controller
             'discount_percent' => 'nullable|numeric|min:0|max:100',
             'final_price_usd' => 'nullable|numeric|min:0',
             'price_note' => 'nullable|string|max:500',
+            'meta_title' => 'nullable|string|max:180',
+            'meta_description' => 'nullable|string|max:300',
             'datasheet_file' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'status' => 'required|in:active,inactive,by_request,discontinued',

@@ -6,7 +6,6 @@
     @php
         $seoRouteKey = match (true) {
             request()->routeIs('home') => 'home',
-            request()->routeIs('products.index') || request()->routeIs('categories.*') => 'products',
             request()->routeIs('solutions') => 'solutions',
             request()->routeIs('articles') || request()->routeIs('articles.*') => 'articles',
             request()->routeIs('contact') => 'contact',
@@ -17,8 +16,10 @@
             ? \App\Models\ContentSetting::getValue('seo', \App\Http\Controllers\Admin\HomeContentController::seoDefaults())
             : [];
         $seoCurrent = $seoRouteKey ? ($seoSettings[$seoRouteKey] ?? []) : [];
-        $metaTitle = trim($seoCurrent['title'] ?? '') ?: trim($__env->yieldContent('title', 'EMKO Gencontrol Indonesia'));
-        $metaDescription = trim($seoCurrent['description'] ?? '') ?: 'EMKO Indonesia menyediakan generator controller, ATS, AMF, synchronizing, load sharing, monitoring, battery charger, katalog produk, invoice, dan layanan sales.';
+        $explicitMetaTitle = trim($__env->yieldContent('meta_title', ''));
+        $explicitMetaDescription = trim($__env->yieldContent('meta_description', ''));
+        $metaTitle = $explicitMetaTitle ?: (trim($seoCurrent['title'] ?? '') ?: trim($__env->yieldContent('title', 'EMKO Gencontrol Indonesia')));
+        $metaDescription = $explicitMetaDescription ?: (trim($seoCurrent['description'] ?? '') ?: 'EMKO Indonesia menyediakan generator controller, ATS, AMF, synchronizing, load sharing, monitoring, battery charger, katalog produk, invoice, dan layanan sales.');
     @endphp
     <title>{{ $metaTitle }}</title>
     @if(!request()->routeIs('downloads'))

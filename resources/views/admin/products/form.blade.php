@@ -54,6 +54,12 @@
     <label>Spesifikasi, satu baris per item<textarea name="specifications_text">{{ old('specifications_text',implode("\n",$product->specifications ?? [])) }}</textarea></label>
     <label>Informasi Pembelian<textarea name="purchase_information" placeholder="Contoh: Untuk pembelian produk ini, silakan hubungi sales untuk konfirmasi stok, jadwal pengiriman, dan kebutuhan konfigurasi proyek.">{{ old('purchase_information',$product->purchase_information) }}</textarea></label>
     <label>Catatan Harga<input name="price_note" value="{{ old('price_note',$product->price_note) }}"></label>
+    <div class="form-section-title">
+        <span>SEO Produk</span>
+        <small>Dipakai untuk meta title dan meta description halaman detail produk.</small>
+    </div>
+    <label>Meta Title<input name="meta_title" maxlength="180" value="{{ old('meta_title',$product->meta_title) }}" placeholder="{{ $product->product_name ?: 'Nama produk - EMKO Indonesia' }}"></label>
+    <label>Meta Description<textarea name="meta_description" maxlength="300" placeholder="Ringkasan singkat untuk hasil pencarian Google.">{{ old('meta_description',$product->meta_description) }}</textarea></label>
     <label class="check"><input type="checkbox" name="is_featured" value="1" @checked(old('is_featured',$product->is_featured))> Produk unggulan</label>
 
     @if($errors->any())
