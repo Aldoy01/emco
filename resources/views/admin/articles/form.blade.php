@@ -17,14 +17,31 @@
             </select>
         </label>
         <label>Tanggal Publish<input type="datetime-local" name="published_at" value="{{ old('published_at', optional($article->published_at)->format('Y-m-d\TH:i')) }}"></label>
-        <label>Gambar Artikel<input type="file" name="image" accept="image/jpeg,image/png,image/webp"><small>Format JPG, PNG, WEBP. Maksimal 2 MB.</small></label>
     </div>
 
-    @if($article->image)
-        <div class="article-admin-preview">
-            <img src="{{ asset($article->image) }}" alt="{{ $article->title }}">
+    <section class="article-thumbnail-uploader">
+        <div class="article-thumbnail-copy">
+            <span>Thumbnail Artikel</span>
+            <strong>Gambar cover untuk kartu blog dan halaman detail</strong>
+            <small>Gunakan gambar horizontal agar tampil proporsional. Format JPG, PNG, atau WEBP. Maksimal 2 MB.</small>
         </div>
-    @endif
+        <label class="article-thumbnail-drop" for="articleImageInput">
+            <div class="article-thumbnail-preview {{ $article->image ? 'has-image' : '' }}">
+                @if($article->image)
+                    <img id="articleImagePreview" src="{{ asset($article->image) }}" alt="{{ $article->title }}">
+                    <span id="articleImagePlaceholder" class="product-placeholder-icon" aria-hidden="true"></span>
+                @else
+                    <img id="articleImagePreview" src="" alt="" hidden>
+                    <span id="articleImagePlaceholder" class="product-placeholder-icon" aria-hidden="true"></span>
+                @endif
+            </div>
+            <div class="article-thumbnail-action">
+                <span>Pilih gambar thumbnail</span>
+                <small>Klik area ini untuk upload dari komputer.</small>
+            </div>
+            <input id="articleImageInput" type="file" name="image" accept="image/jpeg,image/png,image/webp">
+        </label>
+    </section>
 
     <label>Ringkasan Artikel<textarea name="excerpt" maxlength="500" rows="3">{{ old('excerpt', $article->excerpt) }}</textarea></label>
 
@@ -51,6 +68,31 @@
 <script>
     (function () {
         var form = document.querySelector('.article-form');
+        var thumbnailInput = document.getElementById('articleImageInput');
+        var thumbnailPreview = document.getElementById('articleImagePreview');
+        var thumbnailPlaceholder = document.getElementById('articleImagePlaceholder');
+
+        if (thumbnailInput && thumbnailPreview) {
+            thumbnailInput.addEventListener('change', function () {
+                var file = thumbnailInput.files && thumbnailInput.files[0];
+
+                if (!file) {
+                    return;
+                }
+
+                var reader = new FileReader();
+                reader.onload = function (event) {
+                    thumbnailPreview.src = event.target.result;
+                    thumbnailPreview.hidden = false;
+                    thumbnailPreview.parentElement.classList.add('has-image');
+
+                    if (thumbnailPlaceholder) {
+                        thumbnailPlaceholder.hidden = true;
+                    }
+                };
+                reader.readAsDataURL(file);
+            });
+        }
 
         if (!window.tinymce) {
             return;
