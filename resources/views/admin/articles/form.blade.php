@@ -56,6 +56,37 @@
             return;
         }
 
+        function uploadArticleImage(file, filename) {
+            return new Promise(function (resolve, reject) {
+                var formData = new FormData();
+                formData.append('file', file, filename || file.name || 'artikel-image');
+
+                fetch("{{ route('admin.articles.upload-image') }}", {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                }).then(function (response) {
+                    if (!response.ok) {
+                        reject('Upload gambar gagal. Pastikan format JPG, PNG, atau WEBP maksimal 2 MB.');
+                        return null;
+                    }
+                    return response.json();
+                }).then(function (json) {
+                    if (!json || !json.location) {
+                        reject('Upload gambar gagal. URL gambar tidak diterima server.');
+                        return;
+                    }
+                    resolve(json.location);
+                }).catch(function () {
+                    reject('Upload gambar gagal. Coba ulangi beberapa saat lagi.');
+                });
+            });
+        }
+
         tinymce.init({
             selector: '#articleBodyInput',
             license_key: 'gpl',
@@ -75,35 +106,41 @@
             image_title: true,
             automatic_uploads: true,
             images_upload_handler: function (blobInfo, progress) {
-                return new Promise(function (resolve, reject) {
-                    var formData = new FormData();
-                    formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-                    fetch("{{ route('admin.articles.upload-image') }}", {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                            'Accept': 'application/json'
-                        },
-                        body: formData
-                    }).then(function (response) {
-                        if (!response.ok) {
-                            reject('Upload gambar gagal. Pastikan format JPG, PNG, atau WEBP maksimal 2 MB.');
-                            return null;
-                        }
-                        return response.json();
-                    }).then(function (json) {
-                        if (!json || !json.location) {
-                            reject('Upload gambar gagal. URL gambar tidak diterima server.');
-                            return;
-                        }
-                        resolve(json.location);
-                    }).catch(function () {
-                        reject('Upload gambar gagal. Coba ulangi beberapa saat lagi.');
-                    });
-                });
+                return uploadArticleImage(blobInfo.blob(), blobInfo.filename());
             },
             file_picker_types: 'image',
+            file_picker_callback: function (callback, value, meta) {
+                if (meta.filetype !== 'image') {
+                    return;
+                }
+
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'image/jpeg,image/png,image/webp';
+
+                input.addEventListener('change', function () {
+                    var file = input.files && input.files[0];
+
+                    if (!file) {
+                        return;
+                    }
+
+                    uploadArticleImage(file, file.name).then(function (location) {
+                        callback(location, {
+                            title: file.name,
+                            alt: file.name
+                        });
+                    }).catch(function (message) {
+                        tinymce.activeEditor.notificationManager.open({
+                            text: message,
+                            type: 'error',
+                            timeout: 5000
+                        });
+                    });
+                });
+
+                input.click();
+            },
             content_style: 'body{font-family:Inter,Arial,sans-serif;color:#10243f;font-size:16px;line-height:1.75;padding:24px;background:#edf3ff;}h1,h2,h3,h4{line-height:1.2;color:#10243f;}blockquote{margin:18px 0;padding:14px 18px;border-left:4px solid #167a7f;border-radius:10px;background:#ffffff;color:#10243f;}table{border-collapse:collapse;width:100%;background:#fff;}td,th{border:1px solid #dbe5ef;padding:10px;}img{max-width:100%;height:auto;}',
             setup: function (editor) {
                 editor.ui.registry.addButton('h2Button', {
