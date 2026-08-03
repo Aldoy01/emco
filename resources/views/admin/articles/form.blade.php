@@ -198,7 +198,7 @@
                         }
 
                         uploadArticleImage(file, file.name).then(function (location) {
-                            editor.insertContent('<img src="' + location + '" alt="' + file.name.replace(/"/g, '&quot;') + '">');
+                            editor.insertContent('<figure class="article-inline-image"><img src="' + location + '" alt="' + file.name.replace(/"/g, '&quot;') + '"></figure>');
                             editor.save();
                         }).catch(function (message) {
                             editor.notificationManager.open({
