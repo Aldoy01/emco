@@ -99,7 +99,7 @@
             statusbar: false,
             plugins: 'advlist autolink lists link image preview searchreplace visualblocks code fullscreen media table wordcount autoresize',
             toolbar_mode: 'scrolling',
-            toolbar: 'blocks h2Button h3Button h4Button | bold italic strikethrough link forecolor | bullist numlist | alignleft aligncenter alignright alignjustify | image media blockquote code visualblocks | hr table | undo redo',
+            toolbar: 'blocks h2Button h3Button h4Button | bold italic strikethrough link forecolor | bullist numlist | alignleft aligncenter alignright alignjustify | uploadArticleImage image media blockquote code visualblocks | hr table | undo redo',
             block_formats: 'Heading=h1; Paragraph=p; Heading 2=h2; Heading 3=h3; Heading 4=h4; Quote=blockquote',
             font_size_formats: '14px 16px 18px 20px 24px 28px 32px',
             paste_data_images: true,
@@ -143,6 +143,38 @@
             },
             content_style: 'body{font-family:Inter,Arial,sans-serif;color:#10243f;font-size:16px;line-height:1.75;padding:24px;background:#edf3ff;}h1,h2,h3,h4{line-height:1.2;color:#10243f;}blockquote{margin:18px 0;padding:14px 18px;border-left:4px solid #167a7f;border-radius:10px;background:#ffffff;color:#10243f;}table{border-collapse:collapse;width:100%;background:#fff;}td,th{border:1px solid #dbe5ef;padding:10px;}img{max-width:100%;height:auto;}',
             setup: function (editor) {
+                function openArticleImageBrowser() {
+                    var input = document.createElement('input');
+                    input.type = 'file';
+                    input.accept = 'image/jpeg,image/png,image/webp';
+
+                    input.addEventListener('change', function () {
+                        var file = input.files && input.files[0];
+
+                        if (!file) {
+                            return;
+                        }
+
+                        uploadArticleImage(file, file.name).then(function (location) {
+                            editor.insertContent('<img src="' + location + '" alt="' + file.name.replace(/"/g, '&quot;') + '">');
+                            editor.save();
+                        }).catch(function (message) {
+                            editor.notificationManager.open({
+                                text: message,
+                                type: 'error',
+                                timeout: 5000
+                            });
+                        });
+                    });
+
+                    input.click();
+                }
+
+                editor.ui.registry.addButton('uploadArticleImage', {
+                    text: 'Upload Gambar',
+                    tooltip: 'Upload gambar dari komputer',
+                    onAction: openArticleImageBrowser
+                });
                 editor.ui.registry.addButton('h2Button', {
                     text: 'H2',
                     tooltip: 'Heading 2',
