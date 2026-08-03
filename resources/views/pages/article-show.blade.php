@@ -13,8 +13,8 @@
 
 <section class="section article-detail-section">
     @if($article->image)
-        <div class="article-cover">
-            <img src="{{ asset($article->image) }}" alt="{{ $article->title }}">
+        <div class="article-cover" style="position:relative;overflow:hidden;aspect-ratio:16/7;">
+            <img src="{{ asset($article->image) }}" alt="{{ $article->title }}" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center;">
         </div>
     @endif
 
@@ -33,9 +33,10 @@
             <div class="article-card-grid compact">
                 @foreach($relatedArticles as $relatedArticle)
                     <article class="blog-card">
-                        <a class="blog-card-image {{ $relatedArticle->image ? 'has-image' : '' }}" href="{{ route('articles.show', $relatedArticle) }}">
+                        <a class="blog-card-image {{ $relatedArticle->image ? 'has-image' : '' }}" href="{{ route('articles.show', $relatedArticle) }}" style="position:relative;display:block;width:100%;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#eef8f6,#f8fafc);">
                             @if($relatedArticle->image)
-                                <img src="{{ asset($relatedArticle->image) }}" alt="{{ $relatedArticle->title }}">
+                                <img src="{{ asset($relatedArticle->image) }}" alt="{{ $relatedArticle->title }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center;" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+                                <span class="product-placeholder-icon" aria-hidden="true" style="display:none;place-items:center;width:100%;height:100%;"></span>
                             @else
                                 <span class="product-placeholder-icon" aria-hidden="true"></span>
                             @endif

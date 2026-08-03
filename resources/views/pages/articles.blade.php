@@ -19,9 +19,10 @@
     <div class="article-card-grid">
         @forelse($articles as $article)
             <article class="blog-card">
-                <a class="blog-card-image {{ $article->image ? 'has-image' : '' }}" href="{{ route('articles.show', $article) }}">
+                <a class="blog-card-image {{ $article->image ? 'has-image' : '' }}" href="{{ route('articles.show', $article) }}" style="position:relative;display:block;width:100%;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,#eef8f6,#f8fafc);">
                     @if($article->image)
-                        <img src="{{ asset($article->image) }}" alt="{{ $article->title }}">
+                        <img src="{{ asset($article->image) }}" alt="{{ $article->title }}" style="position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:cover;object-position:center;" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+                        <span class="product-placeholder-icon" aria-hidden="true" style="display:none;place-items:center;width:100%;height:100%;"></span>
                     @else
                         <span class="product-placeholder-icon" aria-hidden="true"></span>
                     @endif
