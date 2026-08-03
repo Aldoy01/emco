@@ -66,6 +66,7 @@ Route::middleware(['auth','admin','admin.2fa'])->prefix('admin')->name('admin.')
         Route::resource('quotations', AdminQuotationController::class)->only(['index','show','update']);
         Route::get('content/home', [HomeContentController::class, 'edit'])->name('content.home.edit');
         Route::put('content/home', [HomeContentController::class, 'update'])->name('content.home.update');
+        Route::post('articles/upload-image', [AdminArticleController::class, 'uploadImage'])->name('articles.upload-image');
         Route::resource('articles', AdminArticleController::class)->except('show');
         Route::get('security', [AdminSecurityController::class, 'index'])->name('security.index');
         Route::put('users/{user}/reset-password', [AdminUserController::class, 'resetPassword'])->name('users.reset-password');

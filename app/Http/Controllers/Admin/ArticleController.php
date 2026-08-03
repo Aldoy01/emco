@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -44,6 +45,19 @@ class ArticleController extends Controller
         $this->deleteImage($article->image);
         $article->delete();
         return back()->with('success', 'Artikel berhasil dihapus.');
+    }
+
+    public function uploadImage(Request $request)
+    {
+        $data = $request->validate([
+            'file' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+
+        $path = $this->storeArticleImage($data['file'], 'artikel-editor');
+
+        return response()->json([
+            'location' => asset($path),
+        ]);
     }
 
     private function validated(Request $request, ?Article $article = null): array
@@ -92,18 +106,34 @@ class ArticleController extends Controller
 
     private function storeImage(Request $request): string
     {
-        $file = $request->file('image');
-        $directory = public_path('uploads/articles');
+        return $this->storeArticleImage($request->file('image'), $request->title);
+    }
+
+    private function storeArticleImage(UploadedFile $file, string $name): string
+    {
+        $directory = config('emko.article_upload_path', public_path('uploads/articles'));
         File::ensureDirectoryExists($directory);
-        $filename = Str::slug($request->title) . '-' . time() . '.' . $file->getClientOriginalExtension();
+        $filename = Str::slug($name) . '-' . time() . '-' . Str::random(4) . '.' . $file->getClientOriginalExtension();
         $file->move($directory, $filename);
-        return 'uploads/articles/' . $filename;
+
+        return trim(config('emko.article_upload_url', 'uploads/articles'), '/') . '/' . $filename;
     }
 
     private function deleteImage(?string $image): void
     {
-        if ($image && File::exists(public_path($image))) {
-            File::delete(public_path($image));
+        if (!$image) {
+            return;
+        }
+
+        $paths = [
+            public_path($image),
+            rtrim(config('emko.article_upload_path', public_path('uploads/articles')), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . basename($image),
+        ];
+
+        foreach (array_unique($paths) as $path) {
+            if (File::exists($path)) {
+                File::delete($path);
+            }
         }
     }
 }

@@ -73,7 +73,36 @@
             font_size_formats: '14px 16px 18px 20px 24px 28px 32px',
             paste_data_images: true,
             image_title: true,
-            automatic_uploads: false,
+            automatic_uploads: true,
+            images_upload_handler: function (blobInfo, progress) {
+                return new Promise(function (resolve, reject) {
+                    var formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                    fetch("{{ route('admin.articles.upload-image') }}", {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    }).then(function (response) {
+                        if (!response.ok) {
+                            reject('Upload gambar gagal. Pastikan format JPG, PNG, atau WEBP maksimal 2 MB.');
+                            return null;
+                        }
+                        return response.json();
+                    }).then(function (json) {
+                        if (!json || !json.location) {
+                            reject('Upload gambar gagal. URL gambar tidak diterima server.');
+                            return;
+                        }
+                        resolve(json.location);
+                    }).catch(function () {
+                        reject('Upload gambar gagal. Coba ulangi beberapa saat lagi.');
+                    });
+                });
+            },
             file_picker_types: 'image',
             content_style: 'body{font-family:Inter,Arial,sans-serif;color:#10243f;font-size:16px;line-height:1.75;padding:24px;background:#edf3ff;}h1,h2,h3,h4{line-height:1.2;color:#10243f;}blockquote{margin:18px 0;padding:14px 18px;border-left:4px solid #167a7f;border-radius:10px;background:#ffffff;color:#10243f;}table{border-collapse:collapse;width:100%;background:#fff;}td,th{border:1px solid #dbe5ef;padding:10px;}img{max-width:100%;height:auto;}',
             setup: function (editor) {
